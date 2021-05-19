@@ -1,0 +1,66 @@
+<h1>[`PHP configuration`]</h1>
+
+{if isset($error)}
+    <p><span class="errormsg">{$error}</span></p>
+{else}
+    <div class="fields">
+        <div class="field">
+            <div class="name">[`View`]</div>
+            <div class="value">
+                <a href="?action=phpinfo" target="_blank">[`open`]</a>
+            </div>
+        </div>
+        {if $can_publish_phpinfo}
+            {if isset($controls)}
+                <div class="field">
+                    <div class="name">[`Public link`]</div>
+                    <div class="value">
+                        <ul class="menu-h published-status-selector">
+                            <li class="published-status-item {if $published}gray{/if}">[`link disabled`]</li>
+                            <li>
+                                <input type="checkbox" class="published-status-ibutton" value="1"{if $published} checked="checked"{/if} data-path="//phpinfo//">
+                            </li>
+                            <li class="published-status-item {if !$published}gray{/if}">[`link enabled`]</li>
+                        </ul>
+                        <p class="published-url-container"{if !$published} style="display: none;"{/if}>
+                            <input readonly="readonly" value="{$url}" class="published-url auto-select">
+                        </p>
+                    </div>
+                </div>
+                <div class="field hidden-field"{if !$published} style="display: none;"{/if}>
+                    <div class="name">[`Password protection`]</div>
+                    <div class="value">
+                        <form class="published-password-protection" data-set-password-action="publishedPhpinfoSetPassword">
+                            <input type="hidden" name="path" value="//phpinfo//">
+                            <p class="published-password-empty"{if $published.password} style="display: none;"{/if}>
+                                <i class="icon16 exclamation"></i>
+                                <span><strong>[`The link to your PHP configuration is not password-protected.`]</strong></span>
+                                <br>
+                                <a href="" class="inline-link published-set-password-link"><i class="icon16 add middle"></i> <b><i>[`set password`]</i></b></a>
+                            </p>
+                            
+                            <p class="published-password-exists"{if !$published.password} style="display: none;"{/if}>
+                                <i class="icon16 lock"></i>
+                                <span>[`The link to your PHP configuration is password-protected.`]</span>
+                                <br>
+                                <span class="small">[`Password`]</span>
+                                <input class="auto-select published-password-value" value="{$published.password}" readonly="readonly">
+                                <br>
+                                <a href="" class="inline-link published-reset-password-link"><i class="icon16 sync middle"></i> <b><i>[`change password`]</i></b></a>
+                                <a href="" class="inline-link published-remove-password-link left-margin"><i class="icon16 no middle"></i> <b><i>[`remove password`]</i></b></a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            {else}
+                <div class="field">
+                    <div class="name">[`Public link`]</div>
+                    <div class="value">
+                        <p class="errormsg">{$controls_error}</p>
+                    </div>
+                </div>
+            {/if}
+        {/if}
+        <p class="dialog-error-message errormsg"></p>
+    </div>
+{/if}

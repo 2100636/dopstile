@@ -1,0 +1,51 @@
+<div class="block double-padded">
+    <h1>[`Settings`]</h1>
+</div>
+
+<div class="blank block">
+    <div class="fields">
+        <form action="?module=settings&action=save" class="form" id="settings-form">
+
+            <div class="field-group">
+                <div class="field">
+                    <div class="name">[`Cache lifetime`]</div>
+                    <div class="value">
+                        <input type="number" min="1" value="{ifempty($settings.cache_lifetime)|escape}" name="settings[cache_lifetime]" class="short">
+                        <p class="hint">
+                            [`Menu cache lifetime value (in seconds).`]
+                        </p>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="name">[`Backend menu sorting`]</div>
+                    {if empty($settings.backend_menu_sorting)}
+                        {$settings.backend_menu_sorting = 'id ASC'}
+                    {/if}
+                    {$options = [
+                        'id ASC' => 'ID &darr;',
+                        'id DESC' => 'ID &uarr;',
+                        'name ASC' => '[`Name`] &darr;',
+                        'name DESC' => '[`Name`] &uarr;'
+                    ]}
+                    <div class="value">
+                        <select name="settings[backend_menu_sorting]">
+                            {html_options options=$options selected=$settings.backend_menu_sorting}
+                        </select>
+                        <p class="hint">
+                            [`Refresh page to apply this setting.`]
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="value">
+                    <input type="submit" value="[`Save`]" class="button green">
+                    <span class="status"></span>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="clear"></div>
+</div>

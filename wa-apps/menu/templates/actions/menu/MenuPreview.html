@@ -1,0 +1,14 @@
+{if !empty($menu_id)}
+<h3>[`Code`]</h3>
+<pre class="code">
+{ldelim}$items = $wa->menu->get({$menu_id}){rdelim}
+{ldelim}wa_print_tree tree=$items elem='&lt;a href=":url"&gt;:name&lt;/a&gt;'{rdelim}
+</pre>
+<h3>[`Result`]</h3>
+<div class="result">
+    {$items = $wa->menu->get($menu_id)}
+    {wa_print_tree tree=$items elem='<a href=":url">:name</a>'}
+</div>
+{else}
+<em class="status-error">[`Menu not found`]</em>
+{/if}

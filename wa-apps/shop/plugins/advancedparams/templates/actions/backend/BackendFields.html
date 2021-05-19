@@ -1,0 +1,147 @@
+<script>
+    $(function () {
+        $.shopAdvancedparamsPluginBackend.action = '{$action}';
+    });
+</script>
+<h1>Управление полями дополнительных параметров</h1>
+{if isset($error) && !empty($error)}
+<h3>{$error}</h3>
+{else}
+
+
+<ul class="advancedparams-top-menu advancedparams-action-menu">
+    {foreach $action_types as $action_key=>$name}
+    <li {if $action==$action_key} class="selected"{/if}><a href="?plugin=advancedparams&action=fields&type={$action_key}">{$name}</a></li>
+    {/foreach}
+</ul>
+<p>Для настройки поля выберите тип и установите выбираемые значения</p>
+<div class="fields form">
+    {foreach $fields as $v}
+    {$image_data=''}
+    {if $v.type=='image'}
+        {$image_data=" data-size_type='`$v.size_type`' data-width='`$v.width`' data-height='`$v.height`' " }
+    {/if}
+    <div class="fields-group advancedparams-field" id="advancedparams-field-{$v.id}" data-id="{$v.id}" {$image_data}>
+        <div  class="advancedparams-field-delete">
+           <a href="#"><i class="icon16 delete"></i></a>
+        </div>
+        <input type="hidden" name="action" value="{$v.action}">
+        <input type="hidden" name="id" value="{$v.id}">
+        <div class="field">
+            <div class="name">Ключ поля</div>
+            <div class="value">
+                <span class="advancedparams-field-name">{$v.name}</span>
+                <input class="advancedparams-field-name-edit" style="display: none" name="name" value="{$v.name}">
+                <a href="#" class="advancedparams-field-edit"><i class="icon16 edit"></i></a>
+            </div>
+        </div>
+        <div class="field">
+            <div class="name">Название поля</div>
+            <div class="value">
+                <span class="advancedparams-field-title">{$v.title}</span>
+                <input class="advancedparams-field-title-edit" style="display: none" name="title" value="{$v.title}">
+            </div>
+        </div>
+        <div class="field">
+            <div class="name">Описание поля</div>
+            <div class="value">
+                <span class="hint advancedparams-field-description">{$v.description}</span>
+                <textarea class="advancedparams-field-description-edit" style="display: none;" name="description">{$v.description}</textarea>
+            </div>
+        </div>
+        <div class="field">
+            <div class="name">Тип параметра</div>
+            <div class="value">
+                <select name="type" class="advancedparams-field-type-edit">
+                    {foreach $field_types as $kp=>$vp}
+                    <option value="{$kp}" {if $kp==$v.type} selected="selected"{/if}>{$vp}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        {if $v.selectable}
+        <div class="field advancedparams-field-data">
+            <div class="name">Значения поля</div>
+            <div class="value">
+                {foreach $v.values as $kv=>$val}
+                <div class="advancedparams-field-value" data-id="{$val.id}">
+                    <input type="radio" class="advancedparams-field-value-default" name="default_value[{$v.id}]" value="{$val.id}" {if $val.default==1} checked=""{/if}>
+                    <input type="text" name="value[{$val.id}]" class="advancedparams-field-value-input" value="{$val.value}">
+                    <a href="#" class="advancedparams-field-value-delete"> <i class="icon16 delete"></i></a>
+                </div>
+                {/foreach}
+                <a href="#" class="advancedparams-field-value-add"><i class="icon16 add"></i>Добавить значение</a>
+            </div>
+        </div>
+        {/if}
+        {if $v.type=='image'}
+        <div class="field advancedparams-field-data advancedparams-field-image-size">
+            <form action="?plugin=advancedparams&amp;action=fieldImageTypeSave" method="post">
+                <input type="hidden" name="field_id" value="{$v.id}">
+                <div class="name">Размер изображения</div>
+                <div class="value">
+                    <label class="advancedparams-field-image-size-label">
+                        <input type="radio" name="size_type" value="none" {if $v.size_type=='none'} checked{/if}>Не менять размер</label>
+                </div>
+                <div class="value">
+                    <label class="advancedparams-field-image-size-label">
+                        <input type="radio" name="size_type" value="max" {if $v.size_type=='max'} checked{/if}>Макс. ( Ширина, Высота ) = <strong><span class="star">*</span></strong>
+                        <input type="text" name="width" value="{if $v.size_type=='max'}{$v.width}{/if}" class="small-int short numerical" size="4" {if $v.size_type!='max'} style="display: none;" disabled="disabled"{/if}>px </label>
+                </div>
+                <div class="value">
+                    <label class="advancedparams-field-image-size-label">
+                        <input type="radio" name="size_type" value="width" {if $v.size_type=='width'} checked{/if}>Ширина = <strong><span class="star">*</span></strong>
+                        <input type="text" name="width" value="{if $v.size_type=='width'}{$v.width}{/if}" class="small-int short numerical" size="4" {if $v.size_type!='width'} style="display: none;" disabled="disabled"{/if}>px, Высота = <span class="gray">авто</span></label>
+                </div>
+                <div class="value">
+                    <label class="advancedparams-field-image-size-label">
+                        <input type="radio" name="size_type" value="height" {if $v.size_type=='height'} checked{/if}>Ширина = <span class="gray">авто</span>, Высота = <strong><span class="star">*</span></strong>
+                        <input type="text" name="height" value="{if $v.size_type=='height'}{$v.height}{/if}" class="small-int short numerical" size="4" {if $v.size_type!='height'} style="display: none;" disabled="disabled"{/if}>px</label>
+                </div>
+                <div class="value">
+                    <label class="advancedparams-field-image-size-label">
+                        <input type="radio" name="size_type" value="crop" {if $v.size_type=='crop'} checked{/if}>Квадратная обрезка: Размер = <strong><span class="star">*</span></strong>
+                        <input type="text" name="width" value="{if $v.size_type=='crop'}{$v.width}{/if}" class="small-int short numerical" size="4"  {if $v.size_type!='crop'} style="display: none;" disabled="disabled"{/if}>px</label>
+                </div>
+                <div class="value">
+                    <label class="advancedparams-field-image-size-label">
+                        <input type="radio" name="size_type" value="rectangle" {if $v.size_type=='rectangle'} checked{/if}>Ширина = <strong><span class="star">*</span></strong>
+                        <input type="text" name="width" value="{if $v.size_type=='rectangle'}{$v.width}{/if}" class="small-int short numerical" size="4" {if $v.size_type!='rectangle'} style="display: none;" disabled="disabled"{/if}>px, Высота = <strong><span class="star">*</span></strong>
+                        <input type="text" name="height" value="{if $v.size_type=='rectangle'}{$v.height}{/if}" class="small-int short numerical" size="4" {if $v.size_type!='rectangle'} style="display: none;" disabled="disabled"{/if}>px</label>
+                </div>
+                <div class="value" style="display: none;">
+                    <input type="submit" value="Сохранить размер" class="button green">
+                </div>
+            </form>
+        </div>
+        {/if}
+        <div class="field advancedparams-field-save" style="display: none;">
+            <div class="value submit">
+                <a href="#" class="button green">Сохранить</a>
+            </div>
+        </div>
+    </div>
+    {/foreach}
+    <div class="field">
+        <div class="value submit">
+            <a href="#" class="advancedparams-field-add button green">Добавить Параметр</a>
+        </div>
+    </div>
+    {if !empty($new_fields)}
+        <h3 style="margin-top: 20px;">Найденные параметры</h3>
+    <div class="fields-group advancedparams-fields-new">
+            {foreach $new_fields as $name => $v}
+            <div class="field advancedparams-field-new" id="advancedparams-field-new-{$name}">
+                <div class="name"><strong>{$name}</strong></div>
+                <div class="value">
+                    <a href="#" data-name="{$name}" class="advancedparams-field-add"><i class="icon16 add"></i> Создать поле</a>
+                </div>
+            </div>
+            {/foreach}
+    </div>
+    {/if}
+</div>
+
+{/if}
+
+

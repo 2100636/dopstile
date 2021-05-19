@@ -1,0 +1,24 @@
+<link href="{$wa_app_static_url}plugins/advancedparams/css/shopAdvancedparamsPluginBackend.css?{$wa->version()}" rel="stylesheet" type="text/css">
+<div class="sidebar left200px" id="advancedparams-sidebar">
+    <div class="">
+        <ul class="menu-v with-icons advancedparams-action-menu">
+            <li>
+                <a href="?plugin=advancedparams&action=fields&type=category"><i class="icon16 table"></i>Управление полями</a>
+            </li>
+
+        </ul>
+    </div> 
+</div>
+
+<div class="content left200px blank" id="advancedparams-content">
+    <div class="block triple-padded"><i class="icon16 loading"></i>[`Loading...`]</div>
+</div>
+<script src="{$wa_app_static_url}plugins/advancedparams/js/shopAdvancedparamsPluginBackend.js?{$wa->version()}"></script>
+<script>
+    $(function () {
+        $.shopAdvancedparamsPluginBackend.banned_fields = {json_encode($banned_fields)};
+        $.shopAdvancedparamsPluginBackend.field_types_selectable = {json_encode($field_types_selectable)};
+        $.shopAdvancedparamsPluginBackend.field_types = {json_encode($field_types)};
+        $.shopAdvancedparamsPluginBackend.init();
+    });
+</script>

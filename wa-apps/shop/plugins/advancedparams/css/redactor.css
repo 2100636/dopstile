@@ -1,0 +1,13 @@
+.advancedparams_plugin-fields .redactor-toolbar li a {
+  max-height: 37px;
+}
+.advancedparams_plugin-fields .redactor-air li a.re-button-icon,
+.advancedparams_plugin-fields .redactor-toolbar li a.re-button-icon {
+  padding: 10px;
+  font-size: 16px;
+}
+.advancedparams_plugin-fields .redactor-toolbar:after {
+  content: "";
+  display: inline;
+  clear: both;
+}

@@ -1,0 +1,43 @@
+<tr>
+    <td><strong>{$key}</strong></td>
+    <td>
+        {if $value.type == 'array'}
+            <table style="margin-bottom: 0em;">
+                {foreach $value.value as $option}
+                    <tr>
+                        <td style="background: inherit;">
+                            {$option.name}
+                        </td>
+                    </tr>
+                {/foreach}
+            </table>
+        {/if}
+    </td>
+    <td>
+        {if $value.type == 'int'}
+            <input type="number" name="{$name}"
+                   value="{if isset($config.$key)}{$config.$key}{/if}"/>
+        {elseif $value.type == 'select'}
+            <select name="{$name}">
+                {foreach $value.value as $option}
+                    {if $config.$key === false}{$config.$key = 'false'}{/if}
+                    {if $config.$key === true}{$config.$key = 'true'}{/if}
+                    <option value={$option} {if isset($config.$key) && $config.$key == $option}selected="selected"{/if}>{$option}</option>
+                {/foreach}
+            </select>
+        {else}
+            <table style="margin-bottom: 0em;">
+                {foreach $value.value as $option}
+                    <tr>
+                        <td style="background: inherit;">
+                            <input type="text" style="width: 30px; min-width: 30px;"
+                                   name="{$name}[{$option.name}]"
+                                   value="{if isset($config.$key[$option.name])}{$config.$key[$option.name]}{/if}"/>
+                        </td>
+                    </tr>
+                {/foreach}
+            </table>
+        {/if}
+    </td>
+    <td style="font-size: 0.85em;">{$value.desc}</td>
+</tr>

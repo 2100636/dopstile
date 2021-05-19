@@ -1,0 +1,52 @@
+<ul class="zebra item-list {$mode}">
+    {foreach $items as $item}
+        <li class="item-list-item">
+            <i class="icon16 {$item.icon_class}" title="{$item.icon_title}"></i>
+            
+            {strip}
+                <a href="?{$item.url}"class="item-list-item-open-link{if isset($item.class)} {$item.class}{/if}">
+                    {if $mode == 'directory'}
+                        <span class="rename-part">{$item.name}</span>
+                    {elseif $mode == 'items'}
+                        {if isset($item.folder)}
+                            <span class="folder">{$item.folder}</span>
+                        {/if}
+                        <span class="file{if $item.type != logsItems::ENTRY_ACTION} rename-part{/if}">{$item.name}</span>
+                    {/if}
+                </a>
+            {/strip}
+            
+            {if $item.published|default:false}
+                <i class="icon16 globe-small published-marker" title="[`published file hint`]"></i>
+            {/if}
+            
+            <span class="item-actions">
+                {if $item.type == logsItems::ENTRY_FILE}
+                    <a href="?action=download&path={$item.path}" title="[`Download`]" class="item-list-item-download-link"><i class="icon16 download"></i></a>
+                {/if}
+                
+                {if $wa->user()->getRights('logs', 'rename') &&  in_array($item.type, [logsItems::ENTRY_FILE, logsItems::ENTRY_DIRECTORY])}
+                    <i class="icon16 edit-bw logs-action-icon logs-action-rename" data-path="{$item.path}" title="[`Rename`]"></i>
+                {/if}
+                
+                {if in_array($item.type, [logsItems::ENTRY_FILE, logsItems::ENTRY_DIRECTORY]) && $wa->user()->getRights('logs', 'delete_files')}
+                    <i class="icon16 cross-bw logs-action-icon logs-action-delete" data-path="{$item.path}" title="[`Delete`]"></i>
+                {/if}
+            </span>
+            
+            {if isset($item.data)}
+                <span class="item-data">
+                {if is_array ($item.data)}
+                    {foreach $item.data as $type => $data_block}
+                        <span class="data-block {$type}">{$data_block}</span>
+                    {/foreach}
+                {else}
+                    {$item.data}
+                {/if}
+                </span>
+            {/if}
+        </li>
+    {/foreach}
+</ul>
+
+<h3 class="no-logs-message{if $items} hidden{/if}">[`No logs.`]</h3>

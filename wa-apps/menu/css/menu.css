@@ -1,0 +1,35 @@
+.m-sidebar {
+    margin-top: 18px;
+}
+#menu-tree { padding-left:40px; overflow-x:auto; }
+#menu-tree a.selected { background: #ffc; }
+
+#menu-tree .dr a .count .add { display: none !important; }
+#menu-tree .dr a:hover .count .add { display: block !important; }
+#menu-tree ul.menu-v li a.gray { color: #aaa !important; }
+
+#menu-sidebar-container { max-height: 500px;overflow-y: auto; }
+#menu-sidebar-container li { max-width: 100%; box-sizing: border-box; }
+
+#menu-search-container i.icon16 { margin-top: 2px; }
+#menu-search-container input { width: 130px; font-size: .9em; }
+
+.menu-header { display: table }
+.menu-name { display: table-cell }
+.menu-actions { display: table-cell; padding: 5px 0 0 45px; vertical-align: middle }
+.menu-actions .inline-link { display: inline-block; margin-left: 15px; }
+.menu-actions i.icon16 { cursor: pointer; vertical-align: middle }
+
+.menu-actions input {border: 1px solid #a9a9a9;padding: 4px 0 5px;width: 240px;text-align: center;margin-left: 15px; font-family: monospace;}
+.menu-actions input::selection { background: #ffc; }
+
+.menu-preview-container { margin-top: 30px;}
+
+pre.code { margin:25px 0; padding: 15px 25px;background: #eee;border: 2px dashed #a9a9a9; }
+
+.m-info h2, .m-info h3 {font-weight: normal;border-bottom: 1px solid #a9a9a9;margin-bottom: 1.5em;padding-bottom:.5em;}
+
+.status-error { color: red }
+.status-ok { color: green }
+
+[data-menu-delete] { float: right; display: inline-block; margin: 10px}

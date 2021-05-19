@@ -1,0 +1,131 @@
+
+{$available = $wa->shop->settings('ignore_stock_count') || $product.count === null || $product.count > 0}
+{$badge_html = $wa->shop->badgeHtml($product.badge)}
+
+
+{$_product_image_src = $wa->shop->productImgUrl($product, "300x279")}  {*  253x235 *}
+{if !$_product_image_src}
+  {$_product_image_src = "`$wa_theme_url`img/dummy253_235.png"}
+{/if}
+
+
+<li class="s-product-wrapper item_{$smarty.foreach.foo.index} itemid_{$product.id}"  data-product-id="{$product.id}" itemscope itemtype ="http://schema.org/Product">
+
+
+  <meta itemprop="brand" content="??????">
+  <meta itemprop="productID" content="{$product.id}">
+  <meta itemprop="url" content="{$wa->currentUrl(1)}">
+  <meta itemprop="image" content="{$_product_image_src}">
+
+  {if in_array($product.id, $favorite)}
+    <span class="favorite" data-active="1" data-product="{$product.id}" title="Удалить из избранного">
+      <svg class="icon" ><use xlink:href="#favorite"></use></svg>
+    </span>
+  {else}
+    <span class="favorite" data-active="0" data-product="{$product.id}" title="Добавить в избранное">
+      <svg class="icon"  width="26.185" height="23.25"><use xlink:href="#favorite"></use></svg>
+    </span>
+  {/if}
+
+
+
+  <div class="s-image-wrapper">
+    <a href="{$product.frontend_url}" title="{$product.name}">
+      <img src="{$_product_image_src}" alt="{$product.name}" itemprop="image">
+    </a>
+  </div>
+
+  <div class="s-info-wrapper">
+    <h5 class="s-product-header" itemprop="name">
+      <a href="{$product.frontend_url}" title="{$product.name}">{$product.name}</a>
+    </h5>
+
+    {if $product.summary}
+      <div class="s-product-description" itemprop="description">{strip_tags($product.summary)|truncate:100}</div>
+    {/if}
+  </div>
+
+  <div class="s-offers-wrapper" itemprop="offers" class="offers" itemscope itemtype="http://schema.org/Offer">
+    {if $available}
+      <form class="add-to-cart" {if $product.sku_count > 1}data-url="{$product.frontend_url}{if strpos($product.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
+    {/if}
+
+
+
+
+      {if $available}
+        <div class="s-pricing-wrapper">
+          <span class="s-price">{shop_currency_html($product.price)}</span>
+          {if $product.compare_price > 0}
+            <span class="s-compare"> {shop_currency_html($product.compare_price)}</span>
+          {/if}
+        </div>
+
+        <input type="hidden" name="product_id" value="{$product.id}">
+        <link itemprop="availability" href="http://schema.org/InStock" />
+        <meta itemprop="price" content="{shop_currency($product.price, null, null, 0)}">
+        <meta itemprop="priceCurrency" content="{$wa->shop->currency()}">
+      {else}
+        <div class="s-pricing-wrapper">
+          <span class="s-price">{shop_currency_html($product.price)}</span>
+        </div>
+
+        <div class="s-out-of-stock">
+          <strong>{if $wa->shop->settings('ignore_stock_count')}[`Pre-order only`]{else}[`Out of stock`]{/if}</strong>
+        </div>
+
+        <meta itemprop="price" content="{shop_currency($product.price, null, null, 0)}">
+        <meta itemprop="priceCurrency" content="{$wa->shop->currency()}">
+        <link itemprop="availability" href="http://schema.org/OutOfStock" />
+      {/if}
+
+
+{* <!--
+      <div class="s-rating-wrapper">
+        {if $product.rating > 0}
+          <span class="s-rating-block nowrap">{$wa->shop->ratingHtml($product.rating, 16)}</span>
+          <span class="s-rating-hint">{_w('%d review', '%d reviews', $product.rating_count)}</span>
+        {else}
+          <span class="s-rating-block nowrap">
+            <i class="icon16 star-empty"></i>
+            <i class="icon16 star-empty"></i>
+            <i class="icon16 star-empty"></i>
+            <i class="icon16 star-empty"></i>
+            <i class="icon16 star-empty"></i>
+          </span>
+          <span class="s-rating-hint">[`No review's`]</span>
+        {/if}
+      </div>
+--> *}
+
+
+      {if !($product.sku_count > 1)}
+        <div class="s-quantity-wrapper">
+          <input class="minus-button decrease-volume" type="button" value="&minus;">
+          <input class="product-quantity-field" type="text" name="quantity" value="1" data-max-quantity="{$product.count}">
+          <input class="plus-button increase-volume" type="button" value="+">
+        </div>
+      {/if}
+
+      {if empty($hide_buttons)}
+        <div class="s-buttons-wrapper">
+          {* <!-- {if empty($disable_compare)}
+            <a class="s-button white s-compare-button" href="javascript:void(0);" data-product="{$product.id}" title="[`Compare`]">
+              <i class="icon16 compare {if $wa->shop->inComparison($product.id)}active{/if}"></i>
+            </a>
+          {/if} --> *}
+          {if $available}
+            <input class="s-button s-add-button" type="submit" data-added-text="[`added`]" value="Добавить в корзину">
+          {/if}
+        </div>
+      {/if}
+
+    {if $available}
+      </form>
+    {/if}
+  </div>
+
+  {if !empty($badge_html)}
+    <div class="s-badge-wrapper">{$badge_html}</div>
+  {/if}
+</li>

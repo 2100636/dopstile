@@ -1,0 +1,68 @@
+<form action="?module=item&action=save" method="post" data-success="menuItemSuccessCallback" data-ajax>
+<input type="hidden" name="item[id]" value="{$item.id|escape}">
+{if !empty($parent_id)}<input type="hidden" name="item[parent_id]" value="{$parent_id|escape}">{/if}
+<div class="fields">
+    <div class="field">
+        <div class="name">[`Name`]</div>
+        <div class="value">
+            <input name="item[name]" value="{$item.name|escape}" class="long">
+        </div>
+    </div>
+    <div class="field">
+        <div class="name">[`Type`]</div>
+        <div class="value">
+            <select name="item[type]">
+                {foreach $types as $t => $v}
+                <option value="{$t}"{if $item.type == $t} selected{/if}>{$v.name|escape}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="field">
+        <div class="name">[`Enabled`]</div>
+        <div class="value">
+            <input type="checkbox" name="item[status]" value="1"{if !empty($item.status)} checked{/if}>
+        </div>
+    </div>
+    <div class="field-group" id="item-params" data-type="{$item.type|escape}">
+        {$item->renderParamControls()}
+    </div>
+    <div class="field">
+        <div class="value">
+            {if $item.id !== 'new'}
+                <div class="float-right" style="margin-top: .5em;">
+                    <a href="#" class="inline-link" id="remove-item"><i class="icon16 delete"></i> <b><i>[`delete`]</i></b></a>
+                </div>
+            {/if}
+            <input type="submit" class="button green" value="[`Save`]">
+            <span data-status></span>
+        </div>
+    </div>
+</div>
+</form>
+<script>
+(function ($) {
+$(function () {
+
+    $('[name="item[type]"]').change(function () {
+        $('#item-params').load('?module=item&action=controls&id={$item.id|escape}&type='+$(this).val());
+    });
+
+    $('#remove-item').click(function (e) {
+        e.preventDefault();
+
+
+        if(confirm('[`This will permanently delete item and all its sub-items without the ability to recover. Are you sure?`]')) {
+            var id = $(this).closest('form').find('[name="item[id]"]').val();
+            $(this).find('.icon16').removeClass('delete').addClass('loading');
+
+            $.get('?module=item&action=delete&id='+id, function () {
+                window.location.href = window.location.href.replace(/(#\/menu\/\d+\/)\d+$/, '$1');
+            });
+
+        }
+
+    })
+})
+})(jQuery);
+</script>

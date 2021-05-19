@@ -1,0 +1,13 @@
+{if isset($error)}
+    <p class="errormsg">{$error}</p>
+    <script>
+    $('.dialog input[type="submit"]').attr('disabled', true);
+    </script>
+{else}
+    <h1>[`Settings`]</h1>
+    <div class="fields">
+        {$controls}
+    </div>
+    <p class="errormsg"></p>
+    <div class="clear-both"></div>
+{/if}

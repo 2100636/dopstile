@@ -1,0 +1,31 @@
+{if isset($error)}
+    {if $wa->getEnv() == 'backend'}
+    <div class="errormsg">{$error}</div>
+    
+        <script type="text/javascript">
+            $('.errormsg').waDialog({
+                buttons: '<input type="button" value="[`OK`]" class="cancel button blue">',
+                width: '500px',
+                height: '100px',
+                esc: false,
+                onCancel: function () {
+                    location.href = '?action=files&mode=updatetime';
+                }
+            });
+        </script>
+    {/if}
+{else}
+    <div class="item-data" data-item-lines-empty-message="[`no new records`]" data-item-lines-dialog-ok="[`OK`]">
+        <div class="pagination" title="[`Choose a page`]">{wa_pagination page=$wa->get('page', $item.page_count) total=$item.page_count attrs=['class' => "menu-h"]}</div>
+        <div class="item-lines previous {if $wa->get('page', $item.page_count) == 1}disabled{/if}" {if $wa->get('page', $item.page_count) > 1}title="[`View previous lines`]"{/if}><span class="arrow"></span></div>
+        <pre class="prettyprint item-contents">{$item.contents|escape:'hexentity'}</pre>
+        <div class="item-lines next" title="[`View next lines`]"><span class="arrow"></span></div>
+    </div>
+    <form class="item-lines-form" data-item-lines-url="{$item_lines_url|default:''}">
+        <input type="hidden" name="first_line" value="{$item.first_line}">
+        <input type="hidden" name="last_line" value="{$item.last_line}">
+        <input type="hidden" name="direction" value="">
+        <input type="hidden" name="last_eol" value="{$item.last_eol|default:''}">
+        <input type="hidden" name="file_end_eol" value="{$item.file_end_eol|default:''}">
+    </form>
+{/if}

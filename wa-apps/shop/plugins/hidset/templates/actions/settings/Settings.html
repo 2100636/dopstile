@@ -1,0 +1,40 @@
+<h1>Скрытые настройки</h1>
+<h3>Обратите внимание! Не изменяйте значения параметров если не уверены в том, для чего нужен тот или иной параметр, или
+    же сомневаетесь в правильности его использования</h3>
+<div class="block double-padded">
+    <form id="hidset-form" action="?plugin=hidset&action=save" method="post">
+        <table class="zebra">
+            <tr>
+                <th>Название параметра</th>
+                <th></th>
+                <th>Значение</th>
+                <th>Краткое описание</th>
+            </tr>
+            {foreach $hsets as $key => $value}
+                {include './setting.tr.html' config=$allsets name='shop['|cat:$key|cat:']'}
+            {/foreach}
+            {if $plugins}
+                {foreach $plugins as $plugin_id => $sets}
+                    <tr style="background-color: lightgray">
+                    <tr style="background-color: lightgray">
+                    <td><br><br><h4>[`Настройки плагина`]<br>{$plugin_sets[$plugin_id]['name']}</h4></td>
+                    <td></td><td></td><td></td>
+                    </tr>
+                    {foreach $sets as $key => $value}
+                        {include './setting.tr.html' config=$plugin_sets[$plugin_id]['config'] name='plugins['|cat:$plugin_id|cat:']['|cat:$key|cat:']'}
+                    {/foreach}
+                {/foreach}
+            {/if}
+        </table>
+        <br><br><br>
+        <input type="button" value="Сохранить" class="button green" id="hidset-save"/><i id="hidset-gif"
+                                                                                         class="icon16 loading"
+                                                                                         style="display: none;"></i><i
+                id="hidset-yes" class="icon16 yes" style="display: none;"></i><i id="hidset-no" class="icon16 no"
+                                                                                 style="display: none;"></i>
+        <p id="hidset-errtxt" style="display: none;">В следующих параметрах указаны некорректные значения. Значения
+            должны быть целым положительным числом: </p>
+        <strong id="hidset-errmsg"></strong>
+    </form>
+</div>
+<script src="{$wa_app_static_url}plugins/hidset/js/hidset.js" type="text/javascript"></script>

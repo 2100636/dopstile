@@ -1,0 +1,59 @@
+<div id="dashboard-wrapper" >
+    {* APPS *}
+    <section id="wa_apps">
+        {include file="../dashboard/DashboardAppsBlock.html"}
+    </section>
+
+    <section id="wa_activity">
+        {if !empty($activity)}
+            {include file="../dashboard/DashboardActivityFilter.inc.html" inline}
+        {/if}
+        <div class="activity-list-block" data-empty-text="[`No events in the live stream yet.`]">
+            {if !empty($activity)}
+                {include file="../dashboard/DashboardActivity.html" inline}
+            {else}
+                <div class="empty-activity-text">
+                    <h3>[`No events in the live stream yet.`]</h3>
+                    <p>[`Live stream collects all events from installed apps and presents them in a chronological order.`]</p>
+                </div>
+            {/if}
+        </div>
+    </section>
+
+    {* WIDGETS *}
+    <section id="wa_widgets" class="js-dashboard-widgets">
+        {include file="../dashboard/DashboardWidgets.html" inline}
+        <div class="d-settings-wrapper" id="d-settings-wrapper" style="display: none">
+            <div class="d-settings-container" id="d-settings-container">
+
+                <div class="d-settings-inner-container">
+                    <div class="d-settings-block" id="d-settings-block"></div>
+                </div>
+
+            </div>
+        </div>
+        {*if $request_uri == $backend_url || $request_uri == "`$backend_url`/"}
+            <div class="d-dashboard-link-wrapper" id="d-dashboard-link-wrapper"></div>
+        {/if*}
+    </section>
+</div>
+<script>
+    $(function () {
+        // make header sticky
+        WaHeader.headerBehavior('#wa_apps', { rootMargin: `1px 0px -100% 0px`, threshold: [0, 1] });
+
+        new Dashboard();
+        new Group();
+        new Page();
+
+        $(".js-activity-filter-toggler").on("click", function(event) {
+            event.preventDefault();
+            $('#activity-filter').slideToggle();
+        });
+
+        $('#wa_activity [data-wa-tooltip-content]').waTooltip({
+            arrow: false,
+            placement: "bottom"
+        });
+    });
+</script>

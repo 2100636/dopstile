@@ -1,0 +1,123 @@
+{strip}
+
+<!-- основной телефон -->
+<a href="tel:{str_replace(' ', '', trim($phone))}" rel="nofollow" onclick="ym(11111, 'reachGoal', 'number-phone'); return true;">{$phone}</a>
+
+
+<!-- меню -->
+<div class="top_menu1">
+{$main_menu = $wa->menu->get(1)}
+{wa_print_tree tree=$main_menu elem='<a href=":url">:name</a>'}
+</div>
+
+
+
+
+
+
+<header class="s-header-wrapper">
+  <div class="s-static-header">
+    <div class="s-site-info">
+      {if !empty($theme_settings.logo)}
+        <a class="s-site-logo" href="{$wa_app_url}">
+          <img src="{$wa_theme_url}{$theme_settings.logo}?v{$wa_theme_version}" alt="{$wa->accountName()}" />
+        </a>
+      {else}
+        <span class="s-site-name">{$wa->accountName()}</span>
+      {/if}
+    </div>
+    <nav class="s-header-nav">
+      {if $wa->apps()}
+        <ul class="">
+          {foreach $wa->apps() as $a}
+            <li class="s-nav-item {if $a.url==$wa_app_url && !$wa->globals('isMyAccount')}is-active{/if}">
+              <a href="{$a.url}">{$a.name}</a>
+            </li>
+          {/foreach}
+        </ul>
+      {/if}
+    </nav>
+    {if $wa->shop}
+
+      <div class="s-time-wrapper">
+        {if !empty($theme_settings.use_shop_schedule) && method_exists($wa->shop, 'schedule')}
+          {$_schedule = $wa->shop->schedule()}​​
+
+          <div class="s-schedule-wrapper" id="js-schedule-wrapper">
+            <div class="s-visible">
+              <div class="s-label-wrapper js-show-schedule">{_wd("shop", "Business hours")}</div>
+            </div>
+            <div class="s-hidden">
+              <div class="s-days-wrapper">
+                {foreach $_schedule.current_week as $_day}
+                  <div class="s-day-wrapper">
+                    <div class="s-date">{$_day.name|escape}</div>
+                    <div class="s-value">
+                      {if !empty($_day.work)}
+                        <div class="s-time">{$_day.start_work|escape} — {$_day.end_work|escape}</div>
+                      {else}
+                        <div class="s-text">{_wd("shop", "day off")}</div>
+                      {/if}
+                    </div>
+                  </div>
+                {/foreach}
+              </div>
+            </div>
+
+            <script>
+              ( function($) {
+                var $wrapper = $("#js-schedule-wrapper");
+
+                var open_class = "is-open";
+
+                $wrapper.on("click", ".js-show-schedule", function(event) {
+                  event.preventDefault();
+                  $wrapper.toggleClass(open_class);
+                });
+
+                $(document).on("click", watcher);
+
+                function watcher(event) {
+                  var is_exist = $.contains(document, $wrapper[0]);
+                  if (is_exist) {
+                    var is_target = $.contains($wrapper[0], event.target);
+                    if (!is_target) {
+                      if ($wrapper.hasClass(open_class)) {
+                        $wrapper.removeClass(open_class);
+                      }
+                    }
+                  } else {
+                    $(document).off("click", watcher);
+                  }
+                }
+              })(jQuery);
+            </script>
+          </div>
+
+        {elseif !empty($theme_settings.manual_schedule)}
+          <div class="s-schedule-wrapper">
+            <div class="s-visible">
+              <div class="s-label-wrapper">
+                <span class="s-text">{$theme_settings.manual_schedule|escape}</span>
+              </div>
+            </div>
+          </div>
+        {/if}
+
+        {$phone = $wa->shop->settings('phone')}
+        {if !empty($phone)}
+          <div class="s-phone-wrapper">{$phone}</div>
+        {/if}
+      </div>
+    {/if}
+  </div>
+
+  {include file="`$wa_active_theme_path`/header.html" inline}
+</header>
+
+
+
+
+
+
+{/strip}

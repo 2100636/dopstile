@@ -1,0 +1,96 @@
+<div class="block bordered-bottom">
+    <h1>[`Extended menu`]</h1>
+</div>
+<div class="block double-padded blank m-info">
+
+    <p>[`This app allows you to create multiply different menus. You can use them at your website frontend.`]</p>
+
+    <p>[`If your theme doesn't support this app by default you will need some basics HTML skills.`]</p>
+
+    <p>[`The next code can be used to get an array of menu items.`] [`Please note that <code><strong>$menu_id</strong></code> is a concrete menu ID (see "Examples" section below).`]</p>
+
+    <pre class="code">{ldelim}$items = $wa->menu->get(<strong>$menu_id</strong>){rdelim}</pre>
+
+    <p>[`Next step is creating th HTML structure of your menu. The simplest way to do this is <code><a href="https://developers.webasyst.com/templates/smarty-plugins/#method-wa_print_tree" target="_blank">wa_print_tree</a></code> function:`]</p>
+
+    <pre class="code">{ldelim}wa_print_tree tree=$items elem='&lt;a href=":url"&gt;:name&lt;/a&gt;'{rdelim}</pre>
+
+    <p>[`It will build folded UL-tags list structure.`] [`A little more advanced way is to use Smarty <code><a href="https://www.smarty.net/docsv2/en/language.function.foreach.tpl" target="_blank ">foreach</a></code> loops.`]</p>
+
+
+    {capture name="code"}{literal}
+<nav class="menu">
+    {* [`top level items loop`] *}
+    {foreach $items as $item}
+    <div class="menu-item">
+
+        {* [`render link`] *}
+        <a href="{$item.url}">{$item.name}</a>
+
+        {* [`the item ma have some children`] *}
+        {if !empty($item.childs)}
+        <div class="menu-item-childs">
+
+            {* [`second level items loop`] *}
+            {foreach $item.childs as $child}
+            <div class="menu-item-child">
+
+                {* [`render link`] *}
+                <a href="{$item.url}">{$item.name}</a>
+
+                {* [`here can be some more children: {$child.childs} etc.`] *}
+            </div>
+            {/foreach}
+        </div>
+        {/if}
+    </div>
+    {/foreach}
+</nav>
+    {/literal}{/capture}
+    <pre class="code">{$smarty.capture.code|trim|escape}</pre>
+
+    <h2>[`Cache`]</h2>
+
+    <p>[`This app uses cache to reduce server load. You can change cache life time at the <a href="#/settings/">settings page</a>.`]</p>
+
+    <p>[`File cache is used by default. But you can change cache settings of your Webasyst follow by this guide:`]<br>
+        <a href="[`https://developers.webasyst.com/features/cache/`]" target="_blank">[`https://developers.webasyst.com/features/cache/`]</a>
+    </p>
+
+    <h2>[`Examples`]</h2>
+
+    {if empty($menus)}
+        <p>[`You have no menus yet. Please use the link at the left sidebar to create a new one.`]</p>
+    {else}
+
+        <p>[`Select menu to render the structure.`]</p>
+
+        <ul class="menu-v with-icons" id="menu-preview">
+            {foreach $menus as $menu}
+                <li>
+                    <a href="#/menu/{$menu.id|escape}/" data-id="{$menu.id|escape}">
+                        <i class="icon16 {$menu.type|escape}"></i> {$menu.name|escape}
+                    </a>
+                </li>
+            {/foreach}
+        </ul>
+
+        <div class="menu-preview-container"></div>
+
+        <script>
+            (function ($) {
+            $(function () {
+                $('#menu-preview').find('a').click(function (e) {
+                    e.preventDefault();
+                    var id = $(this).data('id'),
+                        $c = $('.menu-preview-container');
+                    $c.prepend($('<i class="icon16 loading"/>'));
+                    $.get('?module=menu&action=preview&id='+id, function (r) {
+                        $c.html(r)
+                    });
+                })
+            })
+            })(jQuery);
+        </script>
+    {/if}
+</div>

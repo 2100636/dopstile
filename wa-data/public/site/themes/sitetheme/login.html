@@ -1,0 +1,13 @@
+{strip}
+
+{$wa->globals("hideSidebar", true)}
+
+<div class="s-auth-page s-login-page">
+    {$wa->loginForm($error, [
+        'show_title' => true,
+        'show_sub_title' => true,
+        'show_oauth_adapters' => true
+    ])}
+</div>
+
+{/strip}

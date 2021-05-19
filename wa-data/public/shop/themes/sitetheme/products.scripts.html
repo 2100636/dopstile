@@ -1,0 +1,119 @@
+<script>
+  ( function($) {
+
+    var is_products_exist = (typeof Products === "function");
+
+    function initProducts() {
+
+      var $products = $("#s-products-wrapper").removeAttr("id");
+
+      new Products({
+        $wrapper: $products,
+        compare: {
+          url: "{$wa->getUrl("/frontend/compare")}",
+          title: "[`Compare selected products`]"
+        }
+      });
+
+      var initLazyLoading = {if isset($pages_count) && $pages_count > 1 && $theme_settings.pagination == "lazyloading"}true{else}false{/if};
+      if (initLazyLoading) {
+        new LazyLoading({
+          $wrapper: $products,
+          names: {
+            list: ".s-products-list",
+            items: ".s-product-wrapper",
+            paging: ".s-paging-wrapper"
+          }
+        });
+      }
+    }
+
+    if (!is_products_exist) {
+      /* $.getScript("{$wa_theme_url}js/products.js?v{$wa_theme_version}", function() { */
+      $.getScript("/wa-data/public/shop/themes/sitetheme/js/products.js?v{$wa_theme_version}", function() {
+        initProducts();
+      });
+    } else {
+      initProducts();
+    }
+
+
+
+
+
+
+
+
+
+  {if isset($user_id)}
+    {* Пользователь авторизован *}
+
+    $('.favorite').click(function(){
+      id = String($(this).attr('data-product'));
+      active = String($(this).attr('data-active'));
+      if (active == "1") {
+        $(this).attr('data-active', '0');
+        $(this).attr('title','Добавить в избранное');
+        action = 'del';
+      }else{
+        $(this).attr('data-active', '1');
+        $(this).attr('title','Удалить из избранного');
+        action = 'add';
+      };
+      console.log(action);
+      $.ajax({
+        type: "GET",
+        url: "/favoriteproducts?"+action,
+        data: {
+          id: id
+        },
+        success: function(r) {
+          console.log(r);
+          if (r == '') {
+            $('.favorites_wrap a').removeClass('active');
+          }else{
+            $('.favorites_wrap a').addClass('active');
+          };
+        }
+      });
+    });
+
+  {else}
+    {* Пользователь НЕ авторизован *}
+
+    $('.favorite').click(function(){
+      var favorite = $.cookie('favorite');
+      if (favorite) {
+        var exploded = favorite.split(',');
+      }else{
+        var exploded = [];
+      };
+      id = String($(this).attr('data-product'));
+      active = String($(this).attr('data-active'));
+      if (active == "1") {
+        exploded.remove(id);
+        $(this).attr('data-active', '0');
+        $(this).attr('title','Добавить в избранное');
+      }else{
+        exploded[exploded.length] = id;
+        $(this).attr('data-active', '1');
+        $(this).attr('title','Удалить из избранного');
+      };
+      exploded = exploded.unique();
+      var imploded = exploded.join(',');
+      $.cookie('favorite', imploded, { expires: 90, path: '/' });
+      if (imploded) {
+        $('.favorites_wrap a').addClass('active');
+      }else{
+        $('.favorites_wrap a').removeClass('active');
+      };
+    });
+
+  {/if}
+
+
+
+
+
+  })(jQuery);
+</script>

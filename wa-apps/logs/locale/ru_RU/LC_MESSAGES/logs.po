@@ -1,0 +1,607 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: logs\n"
+"POT-Creation-Date: 2013-10-14 22:25+0400\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: logs\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: /wa-apps/logs/templates/actions/backend/BackendDirectory.html:10
+msgid "No logs."
+msgstr "Логов нет."
+
+#: /wa-apps/logs/lib/classes/logsHelper.class.php:77
+msgid "File is not accessible"
+msgstr "Файл недоступен."
+
+#: /wa-apps/logs/lib/actions/backend/logsNavigation.action.php:18
+msgid "By directory"
+msgstr "По директориям"
+
+#: /wa-apps/logs/lib/actions/backend/logsNavigation.action.php:23
+msgid "By file size"
+msgstr "По размеру"
+
+msgid "B,KB,MB,GB"
+msgstr "Б,кБ,МБ,ГБ"
+
+msgid "Logs"
+msgstr "Логи"
+
+msgid "cancel"
+msgstr "отмена"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Delete file"
+msgstr "Удалить файл"
+
+msgid "Deletion of files and directories"
+msgstr "Удаление файлов и директорий"
+
+msgid "OK"
+msgstr "Понятно"
+
+msgid "Save"
+msgstr "Сохранить"
+
+#: /wa-apps/logs/templates/actions/backend/BackendNavigation.html:4
+#: /wa-apps/logs/templates/includes/fileList.html:8
+msgid "Download"
+msgstr "Скачать"
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendNavigation.action.php:30
+msgid "By update time"
+msgstr "По времени изменения"
+
+#: /wa-apps/logs/templates/actions/backend/BackendFile.html:19
+msgid "Choose a page"
+msgstr "Выберите страницу"
+
+#: /wa-apps/logs/templates/actions/backend/BackendFile.html:20
+msgid "View previous lines"
+msgstr "Предыдущее содержимое"
+
+#: /wa-apps/logs/templates/actions/backend/BackendFile.html:22
+msgid "View next lines"
+msgstr "Следующее содержимое"
+
+#: /wa-apps/logs/templates/actions/backend/BackendNavigation.html:11
+#: /wa-apps/logs/templates/actions/backend/BackendNavigation.html:21
+msgid "Settings"
+msgstr "Настройки"
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:12
+msgid "PHP error messages will be saved to file <tt>wa-log/<b>php.log</b></tt>."
+msgstr "Сообщения об ошибках PHP будут сохраняться в файл  <tt>wa-log/<b>php.log</b></tt>."
+
+#: /wa-apps/logs/lib/classes/logsHelper.class.php:327
+msgid "Cannot save changes due to insufficient write permissions for file <tt>%s</tt>."
+msgstr "Не удалось сохранить изменения из-за недостаточных прав доступа к файлу <tt>%s</tt>."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:8
+msgid "Enable PHP error log"
+msgstr "Включить логирование ошибок PHP"
+
+msgid "no new records"
+msgstr "новых записей нет"
+
+#: /wa-apps/logs/templates/actions/backend/BackendNavigation.html:7
+#: /wa-apps/logs/templates/actions/backend/BackendNavigation.html:30
+msgid "View PHP info"
+msgstr "Конфигурация PHP"
+
+#: /wa-apps/logs/lib/config/logsRightConfig.class.php:8
+msgid "Settings management"
+msgstr "Управление настройками"
+
+#: /wa-apps/logs/lib/config/logsRightConfig.class.php:9
+msgid "Viewing of PHP configuration"
+msgstr "Просмотр конфигурации PHP"
+
+#: /wa-apps/logs/templates/actions/backend/BackendNavigation.html:54
+msgid "back"
+msgstr "назад"
+
+msgid "deleted file"
+msgstr "удалил файл"
+
+msgid "published file"
+msgstr "опубликовал файл"
+
+msgid "unpublished file"
+msgstr "отменил публикацию файла"
+
+msgid "published PHP configuration page"
+msgstr "опубликовал страницу с конфигурацией PHP"
+
+msgid "unpublished PHP configuration page"
+msgstr "отменил публикацию страницы с конфигурацией PHP"
+
+msgid "set password for published file"
+msgstr "установил пароль для опубликованного файла"
+
+msgid "set password for PHP configuration page"
+msgstr "установил пароль для опубликованной страницы с конфигурацией PHP"
+
+msgid "removed password for PHP configuration page"
+msgstr "убрал пароль для опубликованной страницы с конфигурацией PHP"
+
+msgid "removed password for published file"
+msgstr "убрал пароль для опубликованного файла"
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:25
+msgid "Keeping this option enabled for a long time may make your disk space occupied by large error logs! Use it only during a brief period of debugging."
+msgstr "Включение этой настройки на длительный период может привести к заполнению дискового пространства большими логами ошибок. Используйте её только на время непродолжительного тестирования."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:21
+msgid "This setting will remain valid during 1 hour only (until %s), to prevent large error logs from occupying server disk space."
+msgstr "Эта настройка будет действовать только в течение 1 часа (до %s) во избежание заполнения дискового пространства большими логами ошибок."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:23
+msgid "Re-enable it after this time expires, if necessary."
+msgstr "Включите её повторно после истечения этого времени, если необходимо."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:38
+msgid "Notify me on large logs size"
+msgstr "Уведомлять меня о большом размере логов"
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:43
+msgid "Show indicator %s next to app icon in main menu when total logs size exceed 1&nbsp;GB."
+msgstr "Показывать индикатор %s рядом с иконкой приложения в главном меню, когда общий размер логов превысит 1&nbsp;ГБ."
+
+#: /wa-apps/logs/lib/config/logsConfig.class.php:27
+msgid "1 GB+"
+msgstr "1 ГБ+"
+
+#: /wa-apps/logs/templates/actions/backend/BackendNavigation.html:27
+msgid "Reload list"
+msgstr "Обновить список"
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:26
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:34
+msgid "This setting will remain valid during 1 hour only, to prevent large error logs from occupying server disk space."
+msgstr "Эта настройка будет действовать только в течение 1 часа — во избежание заполнения дискового пространства большими логами ошибок."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:64
+msgid "PHP errors will be logged without limitations, because “%s” is enabled <a href=\"%s\" target=\"_blank\">in&nbsp;system settings</a>."
+msgstr "Ошибки PHP будут логироваться без ограничений, потому что включен «%s» <a href=\"%s\" target=\"_blank\">в&nbsp;системных настройках</a>."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:70
+msgid "To make PHP errors be logged only during 1 hour, disable \"%s\"."
+msgstr "Для того чтобы ошибки PHP логировались только в течение 1 часа, отключите «%s»."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:55
+msgid "This limitation will not be applied if you enable “%s” setting <a href=\"%s\" target=\"_blank\">in&nbsp;system settings</a>."
+msgstr "Это ограничение не будет действовать, если включить «%s» <a href=\"%s\" target=\"_blank\">в&nbsp;системных настройках</a>."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:37
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:48
+msgid "PHP errors will be logged during 1 hour only (until %s), to prevent large error logs from occupying server disk space."
+msgstr "Ошибки PHP будут логироваться только в течение 1 часа (до %s) во избежание заполнения дискового пространства большими файлами логов."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:41
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:52
+msgid "Re-enable logging after this time expires, if necessary."
+msgstr "Включите логирование повторно после истечения этого времени, если необходимо."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:42
+#: /wa-apps/logs/lib/actions/backend/logsBackendSettings.action.php:58
+msgid "PHP errors will be logged during 1 hour only, to prevent large error logs from occupying server disk space."
+msgstr "Ошибки PHP будут логироваться только в течение 1 часа во избежание заполнения дискового пространства большими файлами логов."
+
+msgid "Function <tt>phpinfo()</tt> is not available on your server."
+msgstr "Функция <tt>phpinfo()</tt> недоступна на этом сервере."
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Cannot show PHP configuration."
+msgstr "Просмотр конфигурации PHP невозможен."
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublished.html:2
+msgid "not published"
+msgstr "не опубликован"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublished.html:6
+msgid "published"
+msgstr "опубликован"
+
+#: /wa-apps/logs/lib/actions/frontend/logsFrontendDownloadFile.controller.php:16
+msgid "File %s is not published."
+msgstr "Файл %s не опубликован."
+
+#: /wa-apps/logs/lib/actions/frontend/logsFrontendDownloadFile.controller.php:22
+msgid "File %s does not exist."
+msgstr "Файл %s не существует."
+
+msgid "No routing rule to create public links to files. Add a <em>hidden</em> rule for Logs app in Site app’s “<a href=\"%s\">Structure</a>” section."
+msgstr "Отсутствует правило маршрутизации для создания публичных ссылок на файлы. Добавьте <em>скрытое</em> правило для приложения «Логи» в разделе «<a href=\"%s\">Структура</a>» приложения «Сайт»."
+
+#: /wa-apps/logs/templates/includes/fileList.html:7
+msgid "published file hint"
+msgstr "опубликованный файл"
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendDelete.controller.php:15
+msgid "Insufficient access rights for user with id = %u to delete log files or directories."
+msgstr "У пользователя с id = %u недостаточно прав доступа для удаления лог-файла %s."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendDelete.controller.php:22
+msgid "%s item is not available for deletion."
+msgstr "Элемент %s недоступен для удаления."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendDelete.controller.php:28
+msgid "Could not delete %s."
+msgstr "Не удалось удалить %s."
+
+#: /wa-apps/logs/lib/actions/frontend/logsFrontendDownloadFile.controller.php:12
+msgid "Invalid file URL."
+msgstr "Некорректный URL файла."
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublished.html:18
+#: /wa-apps/logs/lib/actions/backend/logsBackendUpdatePublishedStatus.controller.php:9
+msgid "You have no permissions to publish or unpublish log files."
+msgstr "У вас недостаточно прав на публикацию или отмену публикации файлов."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendUpdatePublishedStatus.controller.php:16
+msgid "Incorrect data received. Reload this page and try again."
+msgstr "Получены некорректные данные. Обновите страницу и попробуйте снова."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendUpdatePublishedStatus.controller.php:21
+msgid "This file is not available any more. Reload this page."
+msgstr "Этот файл более не доступен. Обновите страницу."
+
+#: /wa-apps/logs/lib/config/logsRightConfig.class.php:8
+msgid "Managing of public links to files"
+msgstr "Управление публичными ссылками на файлы"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublished.html:19
+msgid "Password protection"
+msgstr "Защита паролем"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublished.html:26
+msgid "This file is not password-protected."
+msgstr "Этот файл не защищён паролем."
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublished.html:28
+msgid "set password"
+msgstr "установить пароль"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublished.html:33
+msgid "This file is password-protected."
+msgstr "Этот файл защищён паролем."
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublished.html:35
+msgid "Password"
+msgstr "Пароль"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublished.html:38
+msgid "change password"
+msgstr "изменить пароль"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublished.html:39
+msgid "remove password"
+msgstr "убрать пароль"
+
+#: /wa-apps/logs/templates/actions/frontend/FrontendDownloadFile.html:12
+msgid "Enter a password"
+msgstr "Введите пароль"
+
+#: /wa-apps/logs/templates/actions/frontend/FrontendDownloadFile.html:17
+msgid "Send"
+msgstr "Отправить"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogPublishedSetPassword.controller.php:20
+msgid "This file is not published. Reload this page and publish the file."
+msgstr "Этот файл не опубликован. Обновите эту страницу и опубликуйте файл."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogPublishedSetPassword.controller.php:26
+msgid "This file does not exists. Reload this page and try again."
+msgstr "Этот файл не существует. Обновите страницу и повторите попытку."
+
+#: /wa-apps/logs/lib/actions/frontend/logsFrontendDownloadFile.controller.php:72
+msgid "File %s does not exist or is not accessible."
+msgstr "Файл %s не существует или недоступен."
+
+#: /wa-apps/logs/lib/actions/frontend/logsFrontendDownloadFile.controller.php:39
+msgid "Incorrect password."
+msgstr "Неверный пароль."
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPhpinfo.html:1
+msgid "PHP configuration"
+msgstr "Конфигурация PHP"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPhpinfo.html:8
+msgid "View"
+msgstr "Просмотр"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPhpinfo.html:10
+msgid "open"
+msgstr "открыть"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPhpinfo.html:14
+msgid "Public link"
+msgstr "Публичная ссылка"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPhpinfo.html:34
+#: /wa-apps/logs/templates/actions/dialog/DialogPhpinfo.html:41
+msgid "The link to your PHP configuration is not password-protected."
+msgstr "Ссылка на страницу с конфигурацией PHP не защищена паролем."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogPublishedPhpinfoSetPassword.controller.php:16
+msgid "PHP configuration page is not published. Reload this page and try again."
+msgstr "Страница с конфигурацией PHP не опубликована. Обновите страницу и повторите попытку."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogPublishedPhpinfoUpdateStatus.controller.php:9
+msgid "You have no permissions to publish or unpublish the PHP configuration page."
+msgstr "У вас недостаточно прав доступа для изменения статуса публикации страницы с конфигурацией PHP."
+
+#: /wa-apps/logs/lib/actions/frontend/logsFrontendViewPhpinfo.controller.php:14
+msgid "Function phpinfo() is not available on your server."
+msgstr "Функция phpinfo() недоступна на вашем сервере."
+
+#: /wa-apps/logs/lib/actions/frontend/logsFrontendViewPhpinfo.controller.php:28
+msgid "PHP configuration page is not published."
+msgstr "Страница с конфигурацией PHP не опубликована."
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPhpinfo.html:41
+msgid "The link to your PHP configuration is password-protected."
+msgstr "Ссылка на страницу с конфигурацией PHP защищена паролем."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogPublishedRemovePassword.controller.php:11
+#: /wa-apps/logs/lib/actions/dialog/logsDialogPublishedRemovePassword.controller.php:19
+msgid "Invalid data. Reload this page and try again."
+msgstr "Некорректные данные. Обновите страницу и повторите попытку."
+
+msgid "changed access type for published file"
+msgstr "изменил тип доступа для опубликованного файла"
+
+msgid "downloading"
+msgstr "скачивание"
+
+msgid "viewing"
+msgstr "просмотр"
+
+#: /wa-apps/logs/templates/includes/file_list.html:30
+#: /wa-apps/logs/templates/actions/backend/BackendNavigation.html:31
+msgid "Rename"
+msgstr "Переименовать"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPublishedFile.html:35
+msgid "Non-authorized persons may view sensitive information about your server configuration."
+msgstr "Любые пользователи могут просматривать информацию о конфигурации вашего сервера."
+
+#: /wa-apps/logs/templates/actions/dialog/DialogRename.html:13
+msgid "Name"
+msgstr "Имя"
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendNavigation.action.php:39
+#: /wa-apps/logs/lib/classes/logsItems.class.php:115
+msgid "user actions"
+msgstr "действия пользователей"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogRename.controller.php:21
+msgid "Empty name."
+msgstr "Пустое имя."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogRename.controller.php:40
+msgid "New name matches the old one."
+msgstr "Новое имя совпадает со старым."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogRename.controller.php:48
+msgid "Cannot rename to “%s”. Invalid name or insufficient permissions."
+msgstr "Не могу переименовать в «%s». Некорректное имя или недостаточные права доступа."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogDelete.action.php:34
+msgid "Deleting this directory will also delete %u file contained in it."
+msgid_plural "Deleting this directory will also delete %u files contained in it."
+msgstr[0] "При удалении этой директории будет также удалён %u файл в ней. "
+msgstr[1] "При удалении этой директории будут также удалены %u файла в ней. "
+msgstr[2] "При удалении этой директории будет также удалены %u файлов в ней. "
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogDelete.action.php:52
+msgid "After deletion, it will no longer be available via a published link."
+msgid_plural "After deletion, they will no longer be available via published links."
+msgstr[0] "После удаления он больше не будет доступен по опубликованной ссылке."
+msgstr[1] "После удаления они больше не будут доступны по опубликованным ссылкам."
+msgstr[2] "После удаления они больше не будут доступны по опубликованным ссылкам."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogDelete.action.php:58
+msgid "After deletion, %u of them will no longer be available via a published link."
+msgid_plural "After deletion, %u of them will no longer be available via published links."
+msgstr[0] "После удаления %u из них больше не будет доступен по опубликованной ссылке."
+msgstr[1] "После удаления %u из них больше не будут доступы по опубликованным ссылкам."
+msgstr[2] "После удаления %u из них больше не будут доступы по опубликованным ссылкам."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogDelete.action.php:23
+msgid "Delete directory"
+msgstr "Удалить директорию"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogDelete.action.php:73
+msgid "After deletion, this file will no longer be available via a published link."
+msgstr "После удаления этот файл больше не будет доступен по опубликованной ссылке."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettingsSave.controller.php:9
+msgid "You have no permissions to change settings."
+msgstr "У вас недостаточно прав доступа для изменения настроек."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:114
+msgid "Show relative file paths instead of absolute paths in error logs"
+msgstr "Показывать в логах относительные пути к файлам вместо абсолютных"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogRename.action.php:51
+msgid "After renaming, %u published file in this directory will no longer be available via a published link."
+msgid_plural "After renaming, %u published files in this directory will no longer be available via published links."
+msgstr[0] "После переименования %u опубликованный файл в этой директории больше не будет доступен по опубликованной ссылке."
+msgstr[1] "После переименования %u опубликованных файла в этой директории больше не будут доступны по опубликованным ссылкам."
+msgstr[2] "После переименования %u опубликованных файлов в этой директории больше не будут доступны по опубликованным ссылкам."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogRename.action.php:11
+msgid "You have no permissions to rename files and directories."
+msgstr "У вас недостаточно прав доступа для переименования файлов директорий."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogRename.action.php:32
+msgid "Rename directory"
+msgstr "Переименовать директорию"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogRename.action.php:32
+msgid "Rename file"
+msgstr "Переименовать файл"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogRename.action.php:59
+msgid "After renaming, this file will no longer be available via a published link."
+msgstr "После переименования этот файл больше не будет доступен по опубликованной ссылке."
+
+#: /wa-apps/logs/lib/classes/logsItems.class.php:164
+msgid "%u entry"
+msgid_plural "%u entries"
+msgstr[0] "%u запись"
+msgstr[1] "%u записи"
+msgstr[2] "%u записей"
+
+#: /wa-apps/logs/lib/classes/logsItems.class.php:66
+msgid "directory"
+msgstr "директория"
+
+#: /wa-apps/logs/lib/classes/logsItems.class.php:88
+msgid "log file"
+msgstr "лог-файл"
+
+#: /wa-apps/logs/lib/classes/logsItems.class.php:122
+msgid "user action list"
+msgstr "список действий пользователей"
+
+#: /wa-apps/logs/lib/classes/logsItems.class.php:171
+msgid "user action"
+msgstr "действие пользователей"
+
+#: /wa-apps/logs/lib/classes/logsItemAction.class.php:12
+msgid "Action with id=“%s” is not available."
+msgstr "Действие с id=«%s» недоступно."
+
+#: /wa-apps/logs/lib/config/logsRightConfig.class.php:7
+msgid "Renaming of files and directories"
+msgstr "Переименование файлов и директорий"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogRename.controller.php:32
+msgid "Invalid name."
+msgstr "Некорректное имя."
+
+#: /wa-apps/logs/lib/classes/logsItemFile.class.php:37
+msgid "File is not accessible."
+msgstr "Файл недоступен."
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPhpinfo.html:17
+msgid "link disabled"
+msgstr "выключена"
+
+#: /wa-apps/logs/templates/actions/dialog/DialogPhpinfo.html:21
+msgid "link enabled"
+msgstr "включена"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:87
+msgid "PHP errors are being logged without limitations, because <tt>php_logging_admin</tt> parameter is enabled in Logs’ configuration file."
+msgstr "Ошибки PHP логируются без ограничений, потому что параметр <tt>php_logging_admin</tt> включён в конфигурационном файле."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:89
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:95
+msgid "To make PHP errors be logged only during 1 hour, disable <tt>php_logging_admin</tt> parameter in file <tt>%s</tt>."
+msgstr "Для того чтобы ошибки PHP логировались только в течение 1 часа, отключите параметр <tt>php_logging_admin</tt> в файле <tt>%s</tt>."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:93
+msgid "PHP errors will be logged without limitations, because <tt>php_logging_admin</tt> parameter is enabled in Logs’ configuration file."
+msgstr "Ошибки PHP будут логироваться без ограничений, потому что параметр <tt>php_logging_admin</tt> включён в конфигурационном файле."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:118
+msgid "PHP errors are being logged without limitations, because “%s” is enabled <a href=\"%s\" target=\"_blank\">in&nbsp;system settings</a>."
+msgstr "Ошибки PHP логируются без ограничений, потому что «%s» включён <a href=\"%s\" target=\"_blank\">в&nbsp;системных настройках</a>."
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendNavigation.action.php:35
+msgid "logs"
+msgstr "логи"
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendNavigation.action.php:67
+msgid "This file’s size"
+msgstr "Размер этого файла"
+
+#: /wa-apps/logs/lib/actions/backend/logsBackendNavigation.action.php:67
+msgid "All log files‘ total size"
+msgstr "Размер всех лог-файлов"
+
+#: /wa-apps/logs/lib/classes/logsFrontendPublishedItemController.class.php:44
+msgid "Empty password."
+msgstr "Пустой пароль."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:52
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:63
+msgid "in published files"
+msgstr "в опубликованных файлах"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:53
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:64
+msgid "in backend"
+msgstr "в бекенде"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:58
+msgid "Hide IP addresses in error logs"
+msgstr "Скрывать IP-адреса в логах"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:34
+msgid "Types of PHP errors"
+msgstr "Типы ошибок PHP"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:37
+msgid "all"
+msgstr "все"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:38
+msgid "fatal errors"
+msgstr "критичные ошибки"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogSettings.action.php:39
+msgid "warnings"
+msgstr "предупреждения"
+
+msgid "frontend"
+msgstr "сайт"
+
+msgid "backend"
+msgstr "бекенд"
+
+msgid "%s app"
+msgstr "«%s»"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogRename.controller.php:32
+msgid "A file with this name exists. Enter another name."
+msgstr "Файл с таким именем существует. Введите другое имя."
+
+#: /wa-apps/logs/lib/classes/logsFrontendPublishedItemController.class.php:36
+msgid "File access password has changed. Reload this page to enter a correct password."
+msgstr "Пароль для доступа к файлу изменился. Обновите эту страницу, чтобы ввести правильный пароль."
+
+#: /wa-apps/logs/lib/config/logsRightConfig.class.php:10
+msgid "Managing of public link to PHP configuration page"
+msgstr "Управление публичной ссылкой на страницу с конфигурацией PHP"
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogPhpinfo.action.php:13
+msgid "You have no permissions to view PHP configuration."
+msgstr "У вас недостаточно прав доступа для просмотра конфигурации PHP."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogDelete.action.php:9
+msgid "You have no permissions to delete files and directories."
+msgstr "У вас недостаточно прав доступа для удаления файлов и директорий."
+
+#: /wa-apps/logs/lib/actions/dialog/logsDialogPhpinfo.action.php:82
+msgid "No routing rule to create a public link to the PHP configuration page. Add a <em>hidden</em> rule for Logs app in Site app’s “<a href=\"%s\">Structure</a>” section."
+msgstr "Отсутствуют правила маршрутизации для создания публичной ссылки на страницу конфигурации PHP. Добавьте <em>скрытое</em> правило для приложения «Логи» в разделе «<a href=\"%s\">Структура</a>» приложения «Сайт»."

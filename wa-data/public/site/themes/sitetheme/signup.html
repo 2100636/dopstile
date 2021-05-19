@@ -1,0 +1,31 @@
+{strip}
+
+{$wa->globals("hideSidebar", true)}
+
+<div class="s-auth-page s-signup-page">
+    <header class="s-page-header">
+        {if !empty($confirmed_email)}
+
+            <h1 class="s-header">[s`Thank you!`]</h1>
+            <p>[s`You have successfully confirmed your email.`]</p>
+
+        {elseif !empty($contact)}
+
+            <h1 class="s-header">[s`Thank you!`]</h1>
+            <p>[s`You have successfully signed up.`]</p>
+
+            {if !empty($email_confirmation_hash)}
+                <p><em>[s`A confirmation link has been sent to you by email. Please click this link to confirm your signup and to sign in.`]</em></p>
+            {/if}
+        {/if}
+    </header>
+
+    {if empty($confirmed_email) && empty($contact)}
+        {$wa->signupForm($errors, [
+            "show_title" => true,
+            "show_oauth_adapters" => true
+        ])}
+    {/if}
+</div>
+
+{/strip}

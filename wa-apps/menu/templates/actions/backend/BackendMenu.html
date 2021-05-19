@@ -1,0 +1,60 @@
+{strip}
+<div class="block bordered-bottom">
+    <div class="menu-header">
+        <h1 class="menu-name" data-menu-id="{$menu.id|escape}">
+            <span data-menu-name>{$menu.name|escape}</span>
+        </h1>
+        <div class="menu-actions" data-menu-id="{$menu.id|escape}">
+            <a href="#/menu/{$menu.id}" class="inline-link" data-menu-edit>
+                <i class="icon16 settings"></i> <b><i>[`settings`]</i></b>
+            </a>
+            <span>
+                <input readonly class="bold" value="{ldelim}$items = $wa->menu->get({$menu.id|escape}){rdelim}" id="menu-code">
+            </span> <a href="#/info/"><i class="icon16 info"></i></a>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="sidebar left300px">
+        <div class="block s-collection-list" id="menu-tree" data-menu_id="{$menu.id}">
+        <div><a href="#" class="inline-link m-new-list" id="m-new-list"><i class="icon16 add"></i><b><i>[`New item`]</i></b></a></div>
+        {if $items}
+        {include file="./include.items.html" menu=$menu items=$items}
+        <script>
+            if(/^#\/menu\/\d+\/\d+$/.test(window.location.hash)) {
+                $('#item-'+window.location.hash.replace(/^#\/menu\/\d+\/(\d+)$/, '$1')+'>a').addClass('selected');
+            }
+        </script>
+        {else}
+            <ul class="menu-v with-icons"><li class="drag-newposition" data-type="item"></li></ul>
+        {/if}
+        </div>
+    </div>
+    <div class="content bordered-left blank left300px">
+        <div class="block" id="menu-item">
+            <p>[`Select menu item to change settings.`]</p>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<script src="{$wa_app_static_url}js/dragndrop.js"></script>
+<script src="{$wa_app_static_url}js/menu_tree.js"></script>
+<script>
+(function ($) {
+$(function () {
+    $.menu_tree.init();
+
+    if(document['execCommand']) {
+        $('#menu-code').focus(function () {
+            this.select();
+            document.execCommand("Copy");
+
+            $('<em class="status-ok">[`Copied`]</em>').appendTo($(this).parent()).delay(3000).fadeOut(function () {
+                $(this).remove();
+            });
+        })
+    }
+})
+})(jQuery);
+</script>
+{/strip}

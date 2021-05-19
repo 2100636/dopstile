@@ -1,0 +1,126 @@
+{strip}
+
+{$_hide_cart = $wa->globals("hideCart")}
+
+{* @event frontend_header.%plugin_id% *}
+{foreach $frontend_header as $_}{$_}{/foreach}
+
+<div class="s-fixed-container" id="s-fixed-header">
+    <div class="s-fixed-header">
+
+        {$_catalogs = $wa->shop->categories(0, 0, false)}
+        {if !empty($_catalogs)}
+            <div class="s-column left">
+                <div class="s-catalog-wrapper">
+                    <a class="s-catalog-button" href="javascript:void(0);">[`Catalog`]</a>
+                    <ul class="s-catalog-list">
+                        {foreach $_catalogs as $cat_item}
+                            <li>
+                                <a href="{$cat_item.url}">{$cat_item.name}</a>
+                            </li>
+                        {/foreach}
+                    </ul>
+                    <script>
+                        ( function($) {
+                            new CatalogList({
+                                $wrapper: $("#s-fixed-header .s-catalog-wrapper")
+                            });
+                        })(jQuery);
+                    </script>
+                </div>
+            </div>
+        {/if}
+
+        <div class="s-column center">
+            <div class="s-search-wrapper" role="search">
+                <form method="get" action="{$wa->getUrl("shop/frontend/search")}">
+                    {$_query = $smarty.get.query|default:''|escape}
+                    <input class="s-text-input" type="text" name="query" value="{if !empty($_query)}{$_query}{/if}" placeholder="[`Search`]">
+                    <input class="s-submit-input" type="submit" value="">
+                </form>
+            </div>
+        </div>
+        <div class="s-column right">
+
+            {if $wa->isAuthEnabled()}
+                <div class="s-info-wrapper s-user-account">
+                    <div class="s-info-block">
+                        <div class="s-image-wrapper">
+                            <span class="s-image" {if $wa->user()->isAuth()}style="background-image: url('{$wa->user()->getPhoto2x(20)}');"{/if}></span>
+                        </div>
+                        <div class="s-text-wrapper">
+                            <div class="s-header">{if $wa->user()->isAuth()}[s`My profile`]{else}[`Login`]{/if}</div>
+                            <div class="s-text">[`My account`]</div>
+                        </div>
+                    </div>
+                    <a class="s-link" href="{$wa->getUrl('/frontend/myProfile')}"></a>
+                </div>
+            {/if}
+
+            {if empty($_hide_cart)}
+                {$_cart_total = $wa->shop->cart->total()}
+                {$_cart_count = $wa->shop->cart->count()}
+                {$_price_text = ""}
+                {if !empty($_cart_total)}
+                    {$_price_text = wa_currency_html($_cart_total, $wa->shop->currency())}
+                {/if}
+
+                {$_cart_url = $wa->getUrl('shop/frontend/cart')}
+                {if method_exists($wa->shop, 'checkout')}
+                    {$_cart_url = $wa->shop->checkout()->cartUrl()}
+                {/if}
+
+                <div class="s-info-wrapper s-compare-wrapper is-empty" id="s-compare-counter">
+                    <div class="s-info-block">
+                        <div class="s-image-wrapper">
+                            <span class="s-image"></span>
+                            <span class="s-compare-count">0</span>
+                        </div>
+                        <div class="s-text-wrapper">
+                            <div class="s-header">[`Compare`]</div>
+                        </div>
+                    </div>
+                    <a class="s-link" href="{$wa->getUrl('shop/frontend/compare')}"></a>
+                </div>
+
+                <div class="s-info-wrapper s-cart-wrapper {if empty($_cart_count)}is-empty{/if}" id="s-cart-wrapper">
+                    <div class="s-info-block">
+                        <div class="s-image-wrapper">
+                            <span class="s-image"></span>
+                            <span class="s-cart-count">{if !empty($_cart_count)}{$_cart_count}{/if}</span>
+                        </div>
+                        <div class="s-text-wrapper">
+                            <div class="s-header">[`Cart`]</div>
+                            <div class="s-text">{$_price_text}</div>
+                        </div>
+                    </div>
+                    <a class="s-link" href="{$_cart_url}"></a>
+
+                    {strip}
+                    {capture assign="_loading_template"}
+                        <div class="s-loading-section">
+                            <div class="s-loading-content">
+                                <i class="icon16 loading"></i>
+                            </div>
+                        </div>
+                    {/capture}
+                    {/strip}
+
+                    <script>
+                        ( function($) {
+                            var is_loading = false;
+                            $("#s-cart-wrapper").on("click", function() {
+                                if (!is_loading) {
+                                    is_loading = true;
+                                    $("body").append({$_loading_template|json_encode});
+                                }
+                            });
+                        })(jQuery);
+                    </script>
+                </div>
+            {/if}
+        </div>
+    </div>
+</div>
+
+{/strip}

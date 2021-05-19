@@ -1,0 +1,68 @@
+{if $is_item_list}
+    <div class="list-update-action" title="[`Reload list`]">
+        <i class="icon16 update"></i>
+    </div>
+{/if}
+    
+{if !empty($total_size)}
+    <div class="{$total_size_class}" title="{$total_size_hint}">{$total_size}</div>
+{/if}
+
+<ul class="menu-h float-right action-menu">
+    {foreach $item_actions as $action_id => $action}
+        <li>
+            {if is_array($action)}
+                {if isset($action.url)}<a href="{$action.url}">{/if}
+                    {$data = ''}
+                    {if isset($action.data)}
+                        {foreach $action.data as $data_key => $data_value}
+                            {$data = $data|cat:" data-`$data_key`='`$data_value`'"}
+                        {/foreach}
+                    {/if}
+                    <i class="icon16 {$action.icon_class} logs-action-icon logs-action-{$action_id}" title="{$action.title}"{$data}></i>
+                {if isset($action.url)}</a>{/if}
+            {else}
+                {$action}
+            {/if}
+        </li>
+    {/foreach}
+</ul>
+
+{if !empty($breadcrumbs)}
+    {if !empty($back)}
+        <a href="{$back_url}" class="back-link" title="[`back`]">&larr;</a>
+    {/if}
+    <div class="breadcrumbs{if in_array($wa->get('action'), ['file', 'action'])} item{/if}">
+        {strip}
+            {foreach $breadcrumbs as $item}
+                <span class="breadcrumb breadcrumb">
+                   {if !$item@last}
+                       <a href="{if $item@first}{$wa_app_url}{else}?{$item.url}{/if}">{$item.name}</a>
+                   {else}
+                       {$item.name}
+                   {/if}
+                </span>
+                
+                {if !$item@last}
+                    <span class="breadcrumbs-separator">/</span>
+                {/if}
+            {/foreach}
+        {/strip}
+    </div>
+{else}
+    {if !empty($view_modes)}
+        <ul class="dropdown">
+            {foreach $view_modes as $view_mode}
+                {if $view_mode.selected}
+                    <li class="selected">
+                        <i class="icon16logs {$view_mode.icon}"></i><a>{$view_mode.title}</a><i class="icon10 yes-bw"></i>
+                    </li>
+                {else}
+                    <li>
+                        <i class="icon16logs {$view_mode.icon}"></i><a href="{$wa_app_url}{$view_mode.url}">{$view_mode.title}</a><i class="icon10 yes"></i>
+                    </li>
+                {/if}
+            {/foreach}
+        </ul>
+    {/if}
+{/if}

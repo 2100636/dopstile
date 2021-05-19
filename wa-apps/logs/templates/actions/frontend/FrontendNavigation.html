@@ -1,0 +1,11 @@
+<h1 class="float-left">{if strlen($item.folder)}<span class="gray">{$item.folder|escape}</span>{/if}{$item.name|escape}</h1>
+
+{if $actions}
+    <ul class="menu-h float-right action-menu">
+        {foreach $actions as $action}
+            <li>
+                <a href="{if isset($action.url)}{$action.url}{/if}" title="{$action.title|escape}"><i class="icon16 {$action.icon_class}"></i></a>
+            </li>
+        {/foreach}
+    </ul>
+{/if}

@@ -1,0 +1,49 @@
+<h1>[`Public link`]</h1>
+<h2>{if $file.folder}<span class="gray">{$file.folder}{/if}</span>{$file.name}</h2>
+
+{if isset($error)}
+    <p class="errormsg">{$error}</p>
+{else}
+    <div class="field">
+        <div class="name">[`Public link`]</div>
+        <div class="value">
+            <ul class="menu-h published-status-selector">
+                <li class="published-status-item {if $published_file}gray{/if}">[`link disabled`]</li>
+                <li>
+                    {$controls.status.value}
+                </li>
+                <li class="published-status-item {if !$published_file}gray{/if}">[`link enabled`]</li>
+            </ul>
+            <p class="published-url-container"{if !$published_file} style="display: none;"{/if}>
+                {$controls.url.value}
+            </p>
+        </div>
+    </div>
+    <div class="field hidden-field"{if !$published_file} style="display: none;"{/if}>
+        <div class="name">[`Password protection`]</div>
+        <div class="value">
+            <form class="published-password-protection" data-set-password-action="publishedFileSetPassword">
+                {$controls.password.path}
+                
+                <p class="published-password-empty"{if $published_file.password} style="display: none;"{/if}>
+                    <i class="icon16 exclamation"></i>
+                    <strong>[`This file is not password-protected.`]</strong> <span class="gray">[`Non-authorized persons may view sensitive information about your server configuration.`]</span>
+                    <br>
+                    <a href="" class="inline-link published-set-password-link"><i class="icon16 add middle"></i> <b><i>[`set password`]</i></b></a>
+                </p>
+                
+                <p class="published-password-exists"{if !$published_file.password} style="display: none;"{/if}>
+                    <i class="icon16 lock"></i>
+                    <span>[`This file is password-protected.`]</span>
+                    <br>
+                    <span class="small">[`Password`]</span>
+                    {$controls.password.value}
+                    <br>
+                    <a href="" class="inline-link published-reset-password-link"><i class="icon16 sync middle"></i> <b><i>[`change password`]</i></b></a>
+                    <a href="" class="inline-link published-remove-password-link left-margin"><i class="icon16 no middle"></i> <b><i>[`remove password`]</i></b></a>
+                </p>
+            </form>
+        </div>
+    </div>
+    <p class="dialog-error-message errormsg"></p>
+{/if}

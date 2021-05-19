@@ -1,0 +1,46 @@
+<div class="block">
+    <ul class="menu-v with-icons">
+        <li class="bottom-padded">
+            <a href="#/info/">
+                <i class="icon16 info"></i> [`Info`]
+            </a>
+        </li>
+        {if count($menus) > 20}
+        <li class="bottom-padded" id="menu-search-container">
+            <i class="icon16 search"></i> <input type="text" placeholder="[`filter menus`]">
+        </li>
+        {/if}
+    </ul>
+    <div id="menu-sidebar-container">
+        <ul class="menu-v with-icons">
+            {foreach $menus as $menu}
+            <li data-menu-id="{$menu.id|escape}">
+                <a href="#/menu/{$menu.id|escape}/" class="bold">
+                    <i class="icon16 {$menu.type|escape}" data-menu-icon></i> <span data-menu-name>{$menu.name|escape}</span>
+                </a>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+    <ul class="menu-v with-icons">
+
+        <li class="top-padded bottom-padded" data-menu-id="new">
+            <a href="#/menu/new/" data-menu-edit>
+                <i class="icon16 add"></i> [`Add menu`]
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="hr"></div>
+
+<div class="block">
+    <ul class="menu-v with-icons">
+        <li>
+            <a href="#/settings/"><i class="icon16 settings"></i> [`Settings`]</a>
+        </li>
+        {if $wa->user()->isAdmin('menu')}
+            <li><a href="#/plugins/"><i class="icon16 plugins"></i> [s`Plugins`]</a></li>
+        {/if}
+    </ul>
+</div>

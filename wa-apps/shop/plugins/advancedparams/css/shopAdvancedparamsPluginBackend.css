@@ -1,0 +1,15 @@
+
+/*  ACTION TOP MENU */
+.advancedparams-top-menu li { display: inline-block; padding: 10px 20px; border: 1px solid #ccc; background-color: #fff;  }
+.content .advancedparams-top-menu li.selected { background-color: #eee; }
+/* ACTION FIELD */
+.advancedparams-field { min-width: 400px;  max-width: 600px; padding: 10px; margin: 10px; border: 1px #ccc solid;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.advancedparams-field-delete {  }
+.advancedparams-field-delete a { display: block; }
+.advancedparams-field-name { font-size: 120%; font-weight: bold; }
+.advancedparams-field-title { display: block;}
+.advancedparams-field-value { margin: 5px;}

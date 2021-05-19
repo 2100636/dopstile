@@ -1,0 +1,100 @@
+{strip}
+
+
+{if $wa_url == $wa->currentUrl()}
+  {$is_front = True}
+{else}
+  {$is_front = False}
+{/if}
+
+
+{$phone = $wa->shop->settings('phone')}
+
+
+<!-- Каталог по маркам  -->
+{$cat_marka = $wa->shop->categories(1, 1, true, true)}
+
+<!-- каталог по типу оборудования  -->
+{$cat_oborud = $wa->shop->categories(2, 1, true, true)}
+
+
+{* <!-- 
+{$wa->shop->categories($id = 0, $depth = null, $tree = false, $params = false, $route = null)}
+Возвращает массив подкатегорий указанной категории. Не включает родительскую категорию для всего массива категорий. Параметры:
+$id — id категории, которая должна считаться родительской;
+$depth — глубина захвата подкатегорий;
+$tree — флаг, обозначающий необходимость получить список категорий в виде иерархического дерева (true) либо плоского массива (false);
+$params — флаг, обозначающий необходимость получить доп. параметры категорий;
+$route — массив параметров поселения, для которого необходимо получить список категорий; 
+--> *}
+
+
+
+<!DOCTYPE html>
+<html lang="{if $wa->locale()}{$wa->locale()}{else}ru{/if}">
+<head>
+	<title>{$wa->title()|escape}</title>
+
+	<meta charset="UTF-8">
+	<meta http-equiv="x-ua-compatible" content="IE=edge">
+	<meta name="keywords" content="{$wa->meta('keywords')|escape}" />
+	<meta name="description" content="{$wa->meta('description')|escape}" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="shortcut icon" href="{$wa_static_url}favicon.ico" />
+
+	<!-- <link href="{$wa_url}wa-content/font/ruble/arial/fontface.css" rel="stylesheet" /> 
+	-->
+	<link href="{$wa_theme_url}css/dummy.css?v{$wa_theme_version}" rel="stylesheet" />
+	
+	<link href="{$wa_theme_url}less/style.css?v{$wa_theme_version}" rel="stylesheet" />
+
+	{$wa->css()}
+
+	<script src="{$wa_static_url}wa-content/js/jquery/jquery-1.11.1.min.js"></script>
+	<script src="{$wa_static_url}wa-content/js/jquery/jquery-migrate-1.2.1.min.js?v={$wa->version(true)}"></script>
+	<script src="{$wa_theme_url}js/dummy.js?v{$wa_theme_version}"></script>
+
+	{$wa->js()}
+
+	{include file="`$wa_active_theme_path`/head.html" inline}
+
+	{$wa->head()}
+
+</head>
+<body>
+
+<div class="s-main-wrapper">
+
+	{include file="./header.layout.html" inline}
+
+	{include file="`$wa_active_theme_path`/breadcrumbs.html" inline}
+
+	<div class="s-main-block">
+
+		{* LEFT SIDEBAR *}
+		{$show_sidebar = $wa->globals("hideSidebar")}
+		{if empty($show_sidebar)}
+			<aside class="s-sidebar-wrapper" role="complementary">
+				<div class="s-sidebar-block">
+					{include file="`$wa_active_theme_path`/sidebar.html" inline}
+				</div>
+			</aside>
+		{/if}
+
+		<main class="s-content-wrapper" itemscope itemtype="http://schema.org/WebPage" role="main">
+			<div class="s-content-block" id="s-content-block">
+				{include file="`$wa_active_theme_path`/main.html" inline}
+			</div>
+		</main>
+	</div>
+
+	{*FOOTER*}
+	{include file="`$wa_active_theme_path`/footer.html" inline}
+
+</div>
+
+</body>
+</html>
+
+{/strip}
