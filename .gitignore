@@ -1,5 +1,6 @@
 wa-cache
 wa-log
+wa-config
 .fw_compatible
 .files.md5
 build.php
