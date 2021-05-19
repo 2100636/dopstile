@@ -2,14 +2,6 @@
 return array (
   'dopstile.os' => 
   array (
-    4 => 
-    array (
-      'url' => 'site/*',
-      'app' => 'site',
-      'theme' => 'sitetheme',
-      'theme_mobile' => 'sitetheme',
-      'locale' => 'ru_RU',
-    ),
     0 => 
     array (
       'url' => 'blog/*',
