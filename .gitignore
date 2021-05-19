@@ -1,6 +1,6 @@
 wa-cache
 wa-log
-wa-config
+wa-config/db.php
 wa-config.zip
 .fw_compatible
 .files.md5
