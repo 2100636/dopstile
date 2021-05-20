@@ -2,9 +2,9 @@
 
 
 {if $wa_url == $wa->currentUrl()}
-  {$is_front = True}
+{$is_front = True}
 {else}
-  {$is_front = False}
+{$is_front = False}
 {/if}
 
 
@@ -43,17 +43,28 @@ $route — массив параметров поселения, для кото
 
 	<link rel="shortcut icon" href="{$wa_static_url}favicon.ico" />
 
-	<!-- <link href="{$wa_url}wa-content/font/ruble/arial/fontface.css" rel="stylesheet" /> 
-	-->
-	<link href="{$wa_theme_url}css/dummy.css?v{$wa_theme_version}" rel="stylesheet" />
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+
+	<link href="{$wa_theme_url}less/font.css" rel="stylesheet" />
+	<link href="{$wa_theme_url}less/media.css" rel="stylesheet" />
+	<link href="{$wa_theme_url}less/tabs.css" rel="stylesheet" />
+	<link href="{$wa_theme_url}less/style.css" rel="stylesheet" />
+
+
+
+
+
 	
-	<link href="{$wa_theme_url}less/style.css?v{$wa_theme_version}" rel="stylesheet" />
+<!-- 	<link href="{$wa_theme_url}css/dummy.css?v{$wa_theme_version}" rel="stylesheet" />
+ -->
+
+
 
 	{$wa->css()}
-
-	<script src="{$wa_static_url}wa-content/js/jquery/jquery-1.11.1.min.js"></script>
-	<script src="{$wa_static_url}wa-content/js/jquery/jquery-migrate-1.2.1.min.js?v={$wa->version(true)}"></script>
-	<script src="{$wa_theme_url}js/dummy.js?v{$wa_theme_version}"></script>
 
 	{$wa->js()}
 
@@ -64,35 +75,36 @@ $route — массив параметров поселения, для кото
 </head>
 <body>
 
-<div class="s-main-wrapper">
+	<div class="s-main-wrapper">
 
-	{include file="./header.layout.html" inline}
+		{include file="./header.layout.html" inline}
 
-	{include file="`$wa_active_theme_path`/breadcrumbs.html" inline}
+		{include file="`$wa_active_theme_path`/breadcrumbs.html" inline}
 
-	<div class="s-main-block">
+		<div class="s-main-block">
 
-		{* LEFT SIDEBAR *}
-		{$show_sidebar = $wa->globals("hideSidebar")}
-		{if empty($show_sidebar)}
+			{* LEFT SIDEBAR *}
+			{$show_sidebar = $wa->globals("hideSidebar")}
+			{if empty($show_sidebar)}
 			<aside class="s-sidebar-wrapper" role="complementary">
 				<div class="s-sidebar-block">
 					{include file="`$wa_active_theme_path`/sidebar.html" inline}
 				</div>
 			</aside>
-		{/if}
+			{/if}
 
-		<main class="s-content-wrapper" itemscope itemtype="http://schema.org/WebPage" role="main">
-			<div class="s-content-block" id="s-content-block">
-				{include file="`$wa_active_theme_path`/main.html" inline}
-			</div>
-		</main>
+			<main class="s-content-wrapper" itemscope itemtype="http://schema.org/WebPage" role="main">
+				<div class="s-content-block" id="s-content-block">
+					{include file="`$wa_active_theme_path`/main.html" inline}
+				</div>
+			</main>
+		</div>
+
+		{*FOOTER*}
+
+		{include file="./footer.html" inline}
+
 	</div>
-
-	{*FOOTER*}
-	{include file="`$wa_active_theme_path`/footer.html" inline}
-
-</div>
 
 </body>
 </html>
