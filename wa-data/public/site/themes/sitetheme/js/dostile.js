@@ -1,11 +1,12 @@
-// ( function($) {
+  $(document).ready(function(){
+
+    $(".home_slider").owlCarousel({
+      loop: true,
+      // nav: true,
+      // autoplay: true,
+      items: 1
+    });
+
+  });
 
 
-
-	// $(document).ready(function(){
-		$(".owl-carousel").owlCarousel();
-	// });
-
-	
-
-// })(jQuery);
