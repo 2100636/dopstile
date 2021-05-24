@@ -1,7 +1,7 @@
 {strip}
 
 {if $wa->post("formname") }
-  {shopCustom::sendEmail() } 
+{shopCustom::sendEmail() } 
 {/if}
 
 {$wa->globals("hideSidebar", true)}
@@ -20,14 +20,31 @@
 
 {$user_id = $wa->user('id')}
 {if $user_id}
-  {* <!-- Пользователь авторизован --> *}
-  {$favorite = explode(",", $wa->user("favorite_products"))}
+{* <!-- Пользователь авторизован --> *}
+{$favorite = explode(",", $wa->user("favorite_products"))}
 {else}
-  {* <!-- Пользователь НЕ авторизован --> *}
-  {$favorite = explode(",", waRequest::cookie('favorite'))}
+{* <!-- Пользователь НЕ авторизован --> *}
+{$favorite = explode(",", waRequest::cookie('favorite'))}
 {/if}
 
 
+<div class="slider_block">
+  <div class="container">
+    <div class="slider_wrap">
+      <div class="slider_block_top">
+        <button class="catalog">Каталог</button>
+        <form action="">
+          <input type="search" class="search" placeholder="Поиск">
+        </form>
+      </div>
+      <div class="slider">
+        <div class="owl-carousel">
+          <div><img src="/image/main/banner1_slider.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -35,23 +52,23 @@
 
   <ul>
     {foreach $cat_marka as $marka}
-      <li class="itemid-{$marka.id}"><a href="{$marka.full_url}">{$marka.name}</a></li>
+    <li class="itemid-{$marka.id}"><a href="{$marka.full_url}">{$marka.name}</a></li>
     {/foreach}
   </ul>
 
 
   <ul>
     {foreach $cat_oborud as $oborud}
-      <li class="itemid-{$oborud.id}">
-        <a href="{$oborud.full_url}">
-          {if !empty($oborud.params.img)}
-            <img src="{$oborud.params.img}" alt="{$oborud.name}">
-          {else}
-            <img src="/wa-data/public/shop/themes/sitetheme/img/dummy96.png" style="max-height: 80px;" alt="">
-          {/if}
-          <span>{$oborud.name}</span>
-        </a>
-      </li>
+    <li class="itemid-{$oborud.id}">
+      <a href="{$oborud.full_url}">
+        {if !empty($oborud.params.img)}
+        <img src="{$oborud.params.img}" alt="{$oborud.name}">
+        {else}
+        <img src="/wa-data/public/shop/themes/sitetheme/img/dummy96.png" style="max-height: 80px;" alt="">
+        {/if}
+        <span>{$oborud.name}</span>
+      </a>
+    </li>
     {/foreach}
   </ul>
 
@@ -88,21 +105,21 @@
       <div class="tab-pane active" id="home_new">
         <ul class="s-products-list thumbs-view">
           {foreach $home_new as $product name=foo}
-            {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
+          {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
           {/foreach}
         </ul>
       </div>
       <div class="tab-pane" id="home_skidka">
         <ul class="s-products-list thumbs-view">
           {foreach $home_skidka as $product name=foo}
-            {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
+          {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
           {/foreach}
         </ul>
       </div>
       <div class="tab-pane" id="home_hits">
         <ul class="s-products-list thumbs-view">
           {foreach $home_hits as $product name=foo}
-            {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
+          {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
           {/foreach}
         </ul>
       </div>
@@ -124,5 +141,18 @@
 
 
 </div>
+
+
+
+<!-- <link href="/wa-data/public/jsplugins/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" />
+<link href="/wa-data/public/jsplugins/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.css" /> -->
+
+<link href="../../../jsplugins/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" />
+<link href="../../../jsplugins/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css" />
+
+<script src="/wa-data/public/jsplugins/jquery-3.3.1.min.js"></script>
+<script src="/wa-data/public/jsplugins/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+
+<script src="/wa-data/public/site/themes/sitetheme/js/dostile.js"></script>
 
 {/strip}

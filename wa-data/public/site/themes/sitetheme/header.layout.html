@@ -47,39 +47,3 @@
 </nav>
 
 
-
-
-
-
-
-
-
-
-
-
-<div class="s-fixed-container" id="s-fixed-header">
-  <div class="s-fixed-header">
-    <div class="s-column right">
-
-      {$_cart_total = $wa->shop->cart->total()}
-      {$_cart_count = $wa->shop->cart->count()}
-      {$_price_text = ""}
-      {if !empty($_cart_total)}
-      {$_price_text = wa_currency_html($_cart_total, $wa->shop->currency())}
-
-      {$_cart_url = $wa->getUrl('shop/frontend/cart')}
-      {if method_exists($wa->shop, 'checkout')}
-      {$_cart_url = $wa->shop->checkout()->cartUrl()}
-      {/if}
-
-      {/if}
-    </div>
-  </div>
-</div>
-
-
-
-<header class="s-header-wrapper">
-  {include file="`$wa_active_theme_path`/header.html" inline}
-</header>
-
