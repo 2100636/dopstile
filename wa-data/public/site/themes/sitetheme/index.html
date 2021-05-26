@@ -54,7 +54,7 @@ $route — массив параметров поселения, для кото
 	<link href="{$wa_theme_url}less/tabs.css" rel="stylesheet" />
 	<link href="{$wa_theme_url}less/style.css" rel="stylesheet" />
 
-  <script src="{$wa_static_url}wa-content/js/jquery/jquery-migrate-1.2.1.min.js?v={$wa->version(true)}"></script>
+	<script src="{$wa_static_url}wa-content/js/jquery/jquery-migrate-1.2.1.min.js?v={$wa->version(true)}"></script>
 	
 	<script src="/wa-data/public/jsplugins/jquery-3.3.1.min.js"></script>
 
@@ -64,14 +64,14 @@ $route — массив параметров поселения, для кото
 	
 
 
-{$wa->css()}
+	{$wa->css()}
 
 
-{$wa->js()}
+	{$wa->js()}
 
-{include file="`$wa_active_theme_path`/head.html" inline}
+	{include file="`$wa_active_theme_path`/head.html" inline}
 
-{$wa->head()}
+	{$wa->head()}
 
 </head>
 <body>
@@ -80,11 +80,52 @@ $route — массив параметров поселения, для кото
 
 		{include file="./header.layout.html" inline}
 
+
+		{if $wa->currentUrl() !== "/"}
+	
+		<div class="slider_block header_all_pages">
+			<div class="container">
+				<div class="slider_wrap">
+					<div class="slider_block_top">
+						<button class="catalog">Каталог</button>
+						<form action="">
+							<input type="search" class="search" placeholder="Поиск">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="filter_block filter_all_pages">
+			<div class="container">
+				<div class="filter_block_wrap">
+					<form action="">
+						<select name="" id="">
+							<option value="Марка">Марка</option>
+						</select>
+						<select name="" id="">
+							<option value="Модель">Модель</option>
+						</select>
+						<select name="" id="">
+							<option value="Поколение">Поколение</option>
+						</select>
+						<select name="" id="">
+							<option value="Тип оборудования">Тип оборудования</option>
+						</select>
+						<button>Найти</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		{/if}
+		
+
+
 		{include file="`$wa_active_theme_path`/breadcrumbs.html" inline}
 
 		<div class="s-main-block">
 
-			{* LEFT SIDEBAR *}
+			<!-- {* LEFT SIDEBAR *}
 			{$show_sidebar = $wa->globals("hideSidebar")}
 			{if empty($show_sidebar)}
 			<aside class="s-sidebar-wrapper" role="complementary">
@@ -92,7 +133,7 @@ $route — массив параметров поселения, для кото
 					{include file="`$wa_active_theme_path`/sidebar.html" inline}
 				</div>
 			</aside>
-			{/if}
+			{/if} -->
 
 			<main class="s-content-wrapper" itemscope itemtype="http://schema.org/WebPage" role="main">
 				<div class="s-content-block" id="s-content-block">
