@@ -28,42 +28,9 @@
 {/if}
 
 
-<div class="slider_block">
-  <div class="container">
-    <div class="slider_wrap">
-      <div class="slider_block_top">
-        <button class="catalog">Каталог</button>
-        <form action="">
-          <input type="search" class="search" placeholder="Поиск">
-        </form>
-      </div>
-      <div class="slider">
-        <div class="home_slider owl-carousel">
-          <div class="home_slider_item">
-            <img src="/image/main/banner1_slider.png" alt="">
-            <p class="slider_text"><span class="fz80">Запчасти</span><span class="br"></span> <span class="fz70">для тюнинга</span><span class="br"></span> <span class="fz50">с доставкой по РФ</span></p>
-            <button>Перейти</button>
-          </div>
-          <div class="home_slider_item">
-            <img src="/image/main/banner1_slider.png" alt="">
-            <p class="slider_text"><span class="fz80">Запчасти</span><span class="br"></span> <span class="fz70">для тюнинга</span><span class="br"></span> <span class="fz50">с доставкой по РФ</span></p>
-            <button>Перейти</button>
-          </div>
-          <div class="home_slider_item">
-            <img src="/image/main/banner1_slider.png" alt="">
-            <p class="slider_text"><span class="fz80">Запчасти</span><span class="br"></span> <span class="fz70">для тюнинга</span><span class="br"></span> <span class="fz50">с доставкой по РФ</span></p>
-            <button>Перейти</button>
-          </div>
-          <div class="home_slider_item">
-            <img src="/image/main/banner1_slider.png" alt="">
-            <p class="slider_text"><span class="fz80">Запчасти</span><span class="br"></span> <span class="fz70">для тюнинга</span><span class="br"></span> <span class="fz50">с доставкой по РФ</span></p>
-            <button>Перейти</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+
+
 
 <link rel="stylesheet" href="/wa-data/public/jsplugins/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css"> 
 <script src="/wa-data/public/jsplugins/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
@@ -127,7 +94,7 @@
         <li class="itemid-{$oborud.id}">
           <a href="{$oborud.full_url}">
             {if !empty($oborud.params.img)}
-            <img src="{$oborud.params.img}" alt="{$oborud.name}">
+            <img src="/{$oborud.params.img}" alt="{$oborud.name}">
             {else}
             <img src="/wa-data/public/shop/themes/sitetheme/img/dummy96.png" style="max-height: 80px; width: 135px;" alt="">
             {/if}

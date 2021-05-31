@@ -23,8 +23,8 @@
 
 <div class="s-category-wrapper" id="s-category-wrapper">
   <div class="container">
-    <!-- <h1 class="s-category-header">{$category.name|escape}</h1> -->
-    <h1 class="s-category-header">Тюнинг для {$category.name|escape}</h1>
+    <h1 class="s-category-header">{$category.name|escape}</h1>
+    <!-- <h1 class="s-category-header">Тюнинг для {$category.name|escape}</h1> -->
 
     {* @event frontend_category.%plugin_id% *}
     {foreach $frontend_category as $_}{$_}{/foreach}
@@ -79,7 +79,7 @@
             <li class="itemid-{$oborud.id}">
               <a href="{$oborud.full_url}">
               {if !empty($oborud.params.img)}
-              <img src="{$oborud.params.img}" alt="{$oborud.name}">
+              <img src="/{$oborud.params.img}" alt="{$oborud.name}">
               {else}
               <img src="/wa-data/public/shop/themes/sitetheme/img/dummy96.png" style="max-height: 80px; width: 135px;" alt="">
               {/if}
