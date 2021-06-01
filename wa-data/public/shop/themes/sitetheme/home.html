@@ -31,47 +31,105 @@
 
 
 
-<div class="s-home-wrapper">
 
- 
-
-  <ul>
-    {foreach $cat_marka as $marka}
-      <li class="itemid-{$marka.id}"><a href="{$marka.full_url}">{$marka.name}</a></li>
-    {/foreach}
-  </ul>
+<link rel="stylesheet" href="/wa-data/public/jsplugins/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css"> 
+<script src="/wa-data/public/jsplugins/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
 
 
-  <ul>
-    {foreach $cat_oborud as $oborud}
-      <li class="itemid-{$oborud.id}">
-        <a href="{$oborud.full_url}">
-          {if !empty($oborud.params.img)}
-            <img src="{$oborud.params.img}" alt="{$oborud.name}">
-          {else}
-            <img src="/wa-data/public/shop/themes/sitetheme/img/dummy96.png" style="max-height: 80px;" alt="">
-          {/if}
-          <span>{$oborud.name}</span>
-        </a>
-      </li>
-    {/foreach}
-  </ul>
-
-
-  {* <pre>{print_r($cat_marka,true)}</pre> *}
-  {* <pre>{print_r($cat_oborud,true)}</pre> *}
+<div class="filter_block">
+  <div class="container">
+    <div class="filter_block_wrap">
+      <form action="">
+        <select name="" id="">
+          <option value="Марка">Марка</option>
+        </select>
+        <select name="" id="">
+          <option value="Модель">Модель</option>
+        </select>
+        <select name="" id="">
+          <option value="Поколение">Поколение</option>
+        </select>
+        <select name="" id="">
+          <option value="Тип оборудования">Тип оборудования</option>
+        </select>
+        <button>Найти</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 
-  <!-- тут три таба -->
-  <script src="http://prom.id70.ru/wa-data/public/site/themes/sitetheme/bootstrap/js/tab.js"></script>
+<div class="verified_products">
+  <div class="container">
+    <div class="verified_products_wrap">
+      <div class="verified_products_item">Товары от проверенных роизводителей</div>
+      <div class="verified_products_item">Товары от проверенных роизводителей</div>
+      <div class="verified_products_item">Товары от проверенных роизводителей</div>
+      <div class="verified_products_item">Товары от проверенных роизводителей</div>
+    </div>
+  </div>
+</div>
 
-  {$home_new    = $wa->shop->productSet('home_new')}
-  {$home_skidka = $wa->shop->productSet('home_skidka')}
-  {$home_hits   = $wa->shop->productSet('home_hits')}
 
-  <div class="home_products" id="s-products-wrapper">
+<div class="catalog_car_brands">
+  <div class="container">
+    <h2>Каталог по маркам автомобиля</h2>
+    <div class="catalog_car_brands_wrap">
+      <ul class="brands">
+        {foreach $cat_marka as $marka}
+        <li class="itemid-{$marka.id}"><a href="{$marka.full_url}">{$marka.name}</a></li>
+        {/foreach}
+      </ul>
+    </div>
+  </div>
+</div>
 
+<div class="catalog_type_equipment">
+  <div class="container">
+    <h2>Каталог по типу оборудования</h2>
+    <div class="catalog_type_equipment_wrap">
+      <ul>
+        {foreach $cat_oborud as $oborud}
+        <li class="itemid-{$oborud.id}">
+          <a href="{$oborud.full_url}">
+            {if !empty($oborud.params.img)}
+            <img src="/{$oborud.params.img}" alt="{$oborud.name}">
+            {else}
+            <img src="/wa-data/public/shop/themes/sitetheme/img/dummy96.png" style="max-height: 80px; width: 135px;" alt="">
+            {/if}
+            <span>{$oborud.name}</span>
+          </a>
+        </li>
+        {/foreach}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="discount_block">
+  <div class="container">
+    <div class="discount_block_wrap">
+      <div class="discount_banner">
+        <p class="heading">Получите купон на<span class="br"></span> весь ассортимент</p>
+        <p class="text">5% скидка</p>
+        <p class="deadlines">*Действует до конца апреля</p>
+        <button>Забрать купон</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- тут три таба -->
+<script src="/wa-data/public/jsplugins/tab.js"></script>
+
+{$home_new    = $wa->shop->productSet('home_new')}
+{$home_skidka = $wa->shop->productSet('home_skidka')}
+{$home_hits   = $wa->shop->productSet('home_hits')}
+
+<div class="home_products" id="s-products-wrapper">
+  <div class="container">
     <h2>Выгодная покупка</h2>
 
     <ul class="nav nav-tabs">
@@ -90,41 +148,41 @@
       <div class="tab-pane active" id="home_new">
         <ul class="s-products-list thumbs-view">
           {foreach $home_new as $product name=foo}
-            {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
+          {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
           {/foreach}
         </ul>
       </div>
       <div class="tab-pane" id="home_skidka">
         <ul class="s-products-list thumbs-view">
           {foreach $home_skidka as $product name=foo}
-            {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
+          {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
           {/foreach}
         </ul>
       </div>
       <div class="tab-pane" id="home_hits">
         <ul class="s-products-list thumbs-view">
           {foreach $home_hits as $product name=foo}
-            {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
+          {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
           {/foreach}
         </ul>
       </div>
     </div>
-
   </div>
-
-    <hr>
-
-
-  {include file="./products.scripts.html" inline}
-
-
-
-
-  {* @event frontend_homepage.%plugin_id% *}
-  {foreach $frontend_homepage as $_}{$_}{/foreach}
-
-
-
 </div>
+
+
+
+
+{include file="./products.scripts.html" inline}
+
+
+
+
+{* @event frontend_homepage.%plugin_id% *}
+{foreach $frontend_homepage as $_}{$_}{/foreach}
+
+
+
+
 
 {/strip}

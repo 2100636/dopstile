@@ -1,21 +1,62 @@
 {strip}
 
-<div class="s-footer-wrapper">
-    <div class="s-footer-block">
-        <div class="s-footer-columns">
-            <div class="s-column">
-                <div class="copyright">
-                    &copy;&nbsp;{time()|wa_datetime:"Y"}&nbsp;<a href="{$wa_url}">{$wa->accountName()}</a>
-                </div>
-            </div>
-            <div class="s-column"></div>
-            <div class="s-column">
-                <div class="poweredby" role="complementary" style="text-align: right;">
-                    [`We are using <a href="http://www.webasyst.com/">Webasyst</a>`]
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 {/strip}
+
+<div class="banner_call"> 
+  <div class="container">
+    <div class="banner_call_wrap">
+      <p class="text">После оформления заказа, наши операторы свяжутся с вами для уточнения деталей.</p>
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  <div class="container">
+    <div class="footer_wrapper">
+      <div class="footer_item">
+        <div class="logo_wrap">
+          <div class="logo">
+            <a href="/"></a>
+          </div>
+          <a href="/" class="logo_text">Dopstile</a>
+        </div>
+        <a href="" class="footer_left">Тюнинг и запчасти с доставкой по РФ</a>
+        <a href="" class="footer_left">Пользовательское соглашение  </a>
+        <a href="" class="footer_left">Карта сайта</a>
+      </div>
+      <div class="footer_item">
+        <p class="title">Покупателям</p>
+        <div class="top_menu1">
+          {$main_menu = $wa->menu->get(1)}
+          {wa_print_tree tree=$main_menu elem='<a href=":url">:name</a>'}
+        </div>
+      </div>
+      <div class="footer_item">
+        <p class="title">Контакты</p>
+        <ul class="contact_list">
+          <li><a href="tel:{str_replace(' ', '', trim($phone))}" rel="nofollow" class="tel" onclick="ym(11111, 'reachGoal', 'number-phone'); return true;">{$phone}</a></li>
+          <li><div class="messenger_wrap">
+            <a href="" class="telegram"></a>
+            <a href="" class="whatsapp"></a>
+            <a href="" class="messenger">+7 913 888 38 38</a>    
+          </div></li>
+          <li><a href="" class="email">help@depstile.ru</a></li>
+          <li><a href="">г. Москва ул. Шишкина 24</a></li>
+        </ul>
+      </div>
+      <div class="footer_item">
+        <p class="title">Следите за нами в социальных сетях!</p>
+        <div class="social_block">
+          <a href="" class="youtube"></a>
+          <a href="" class="twitter"></a>
+          <a href="" class="vk"></a>
+          <a href="" class="instagram"></a>
+        </div>
+        <p class="title">Мы всегда на связи и с радостью<span class="br"></span> поможем Вам</p>
+        <button class="call">Заказать звонок</button>
+      </div>
+    </div>
+  </div>
+</footer>
