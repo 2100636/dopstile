@@ -53,15 +53,10 @@ $route — массив параметров поселения, для кото
 	<link href="{$wa_theme_url}less/media.css" rel="stylesheet" />
 	<link href="{$wa_theme_url}less/tabs.css" rel="stylesheet" />
 	<link href="{$wa_theme_url}less/style.css" rel="stylesheet" />
-	
-	<!-- <link href="../../../jsplugins/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" />
-	<link href="../../../jsplugins/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css" /> -->
-	
-	<link href="/wa-data/public/jsplugins/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" />
-	<link href="/wa-data/public/jsplugins/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.css" />
 
+	<script src="{$wa_static_url}wa-content/js/jquery/jquery-migrate-1.2.1.min.js?v={$wa->version(true)}"></script>
+	
 	<script src="/wa-data/public/jsplugins/jquery-3.3.1.min.js"></script>
-	<script src="/wa-data/public/jsplugins/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
 
 	<script src="/wa-data/public/site/themes/sitetheme/js/dostile.js"></script>
 
@@ -69,23 +64,14 @@ $route — массив параметров поселения, для кото
 	
 
 
+	{$wa->css()}
 
 
+	{$wa->js()}
 
-	
-<!-- 	<link href="{$wa_theme_url}css/dummy.css?v{$wa_theme_version}" rel="stylesheet" />
--->
+	{include file="`$wa_active_theme_path`/head.html" inline}
 
-
-
-{$wa->css()}
-
-
-{$wa->js()}
-
-{include file="`$wa_active_theme_path`/head.html" inline}
-
-{$wa->head()}
+	{$wa->head()}
 
 </head>
 <body>
@@ -94,11 +80,156 @@ $route — массив параметров поселения, для кото
 
 		{include file="./header.layout.html" inline}
 
+		{if $wa->currentUrl() == "/"}
+
+		<div class="gray_block">
+			<div class="container">
+				<div class="gray_wrap">
+					<div class="gray_block_top">
+						<button class="catalog">Каталог</button>
+						<form action="">
+							<input type="search" class="search" placeholder="Поиск">
+						</form>
+					</div>
+					<div class="catalog_menu">
+						<div class="catalog_menu_wrap">	
+							<div class="catalog_menu_left_block">
+								<p class="title">Магазин</p>
+								<ul class="first_ul">
+									<li><a href="">Внешний тюнинг</a></li>
+									<li><a href="">Тюнинг салона</a></li>
+									<li><a href="">Дооснащение</a></li>
+									<li><a href="">Оптика и освещение</a></li>
+									<li><a href="">Аксессуары</a></li>
+									<li><a href="">Электронника</a></li>
+								</ul>
+								<p class="title">Услуги</p>
+								<ul>
+									<li><a href="">Стайлинг и кузов авто</a></li>
+									<li><a href="">Детейлинг и уход за авто</a></li>
+									<li><a href="">Ремонт и тюнинг оптики</a></li>
+									<li><a href="">Установка доп. оборудования</a></li>
+								</ul>
+							</div>
+							<div class="catalog_menu_right_block">
+								<ul>
+									<li><a href="">Аэродинамические обвесы</a></li>
+									<li><a href="">Передние бампера</a></li>
+									<li><a href="">Задние бампера</a></li>
+									<li><a href="">Накладки на пороги</a></li>
+									<li><a href="">Аэродинамические обвесы</a></li>
+									<li><a href="">Передние бампера</a></li>
+									<li><a href="">Юбки на передний бампер</a></li>
+									<li><a href="">Арки, расширители, крылья, капоты </a></li>
+								</ul>
+								<ul>
+									<li><a href="">Аэродинамические обвесы</a></li>
+									<li><a href="">Передние бампера</a></li>
+									<li><a href="">Задние бампера</a></li>
+									<li><a href="">Накладки на пороги</a></li>
+									<li><a href="">Аэродинамические обвесы</a></li>
+									<li><a href="">Передние бампера</a></li>
+									<li><a href="">Юбки на передний бампер</a></li>
+									<li><a href="">Арки, расширители, крылья, капоты </a></li>
+								</ul>
+								<div class="consultation_block">
+									<p class="title">Мы всегда на связи!<br> И готовы помочь!</p>
+									<div class="banner_block"></div>
+									<p class="text">Перезвонить Вам?</p>
+									<button>Консультация</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="slider">
+						<div class="home_slider owl-carousel">
+							<div class="home_slider_item">
+								<img src="/image/main/banner1_slider.png" alt="">
+								<p class="slider_text"><span class="fz80">Запчасти</span><span class="br"></span> <span class="fz70">для тюнинга</span><span class="br"></span> <span class="fz50">с доставкой по РФ</span></p>
+								<button>Перейти</button>
+							</div>
+							<div class="home_slider_item">
+								<img src="/image/main/banner1_slider.png" alt="">
+								<p class="slider_text"><span class="fz80">Запчасти</span><span class="br"></span> <span class="fz70">для тюнинга</span><span class="br"></span> <span class="fz50">с доставкой по РФ</span></p>
+								<button>Перейти</button>
+							</div>
+							<div class="home_slider_item">
+								<img src="/image/main/banner1_slider.png" alt="">
+								<p class="slider_text"><span class="fz80">Запчасти</span><span class="br"></span> <span class="fz70">для тюнинга</span><span class="br"></span> <span class="fz50">с доставкой по РФ</span></p>
+								<button>Перейти</button>
+							</div>
+							<div class="home_slider_item">
+								<img src="/image/main/banner1_slider.png" alt="">
+								<p class="slider_text"><span class="fz80">Запчасти</span><span class="br"></span> <span class="fz70">для тюнинга</span><span class="br"></span> <span class="fz50">с доставкой по РФ</span></p>
+								<button>Перейти</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{elseif !empty($product)}
+
+		<div class="gray_block">
+			<div class="container">	
+				<div class="gray_wrap">
+					<div class="gray_block_top">
+						<button class="catalog">Каталог</button>
+						<form action="">
+							<input type="search" class="search" placeholder="Поиск">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{else}
+
+		<div class="gray_block">
+			<div class="container"> 
+				<div class="gray_wrap">
+					<div class="gray_block_top">
+						<button class="catalog">Каталог</button>
+						<form action="">
+							<input type="search" class="search" placeholder="Поиск">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="filter_block filter_all_pages">
+			<div class="container">
+				<div class="filter_block_wrap">
+					<form action="">
+						<select name="" id="">
+							<option value="Марка">Марка</option>
+						</select>
+						<select name="" id="">
+							<option value="Модель">Модель</option>
+						</select>
+						<select name="" id="">
+							<option value="Поколение">Поколение</option>
+						</select>
+						<select name="" id="">
+							<option value="Тип оборудования">Тип оборудования</option>
+						</select>
+						<button>Найти</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		{/if}
+		
+
+
 		{include file="`$wa_active_theme_path`/breadcrumbs.html" inline}
 
 		<div class="s-main-block">
 
-			{* LEFT SIDEBAR *}
+			<!-- {* LEFT SIDEBAR *}
 			{$show_sidebar = $wa->globals("hideSidebar")}
 			{if empty($show_sidebar)}
 			<aside class="s-sidebar-wrapper" role="complementary">
@@ -106,7 +237,7 @@ $route — массив параметров поселения, для кото
 					{include file="`$wa_active_theme_path`/sidebar.html" inline}
 				</div>
 			</aside>
-			{/if}
+			{/if} -->
 
 			<main class="s-content-wrapper" itemscope itemtype="http://schema.org/WebPage" role="main">
 				<div class="s-content-block" id="s-content-block">
