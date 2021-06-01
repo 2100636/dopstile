@@ -1,5 +1,7 @@
 {strip}
 
+{/strip}
+
 
 {if $wa_url == $wa->currentUrl()}
 {$is_front = True}
@@ -11,10 +13,10 @@
 {$phone = $wa->shop->settings('phone')}
 
 
-<!-- Каталог по маркам  -->
+{* <!-- Каталог по маркам  --> *}
 {$cat_marka = $wa->shop->categories(1, 1, true, true)}
 
-<!-- каталог по типу оборудования  -->
+{* <!-- каталог по типу оборудования  --> *}
 {$cat_oborud = $wa->shop->categories(2, 1, true, true)}
 
 
@@ -54,9 +56,10 @@ $route — массив параметров поселения, для кото
 	<link href="{$wa_theme_url}less/tabs.css" rel="stylesheet" />
 	<link href="{$wa_theme_url}less/style.css" rel="stylesheet" />
 
+	<script src="/wa-data/public/jsplugins/jquery-3.3.1.min.js"></script>
+	
 	<script src="{$wa_static_url}wa-content/js/jquery/jquery-migrate-1.2.1.min.js?v={$wa->version(true)}"></script>
 	
-	<script src="/wa-data/public/jsplugins/jquery-3.3.1.min.js"></script>
 
 	<script src="/wa-data/public/site/themes/sitetheme/js/dostile.js"></script>
 
@@ -254,5 +257,3 @@ $route — массив параметров поселения, для кото
 
 </body>
 </html>
-
-{/strip}
