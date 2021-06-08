@@ -1,0 +1,28 @@
+<div class="yml-file-manager">
+
+    <div class="yml-filmng-head">
+        <a href="#" class="back"{if empty($back_path)} style="display:none"{else} data-path="{$back_path}"{/if}>← Назад</a>
+
+        <span class="root-path">{$path}</span>
+
+        <span class="selected-file"{if empty($selected_file)} style="display: none"{else} data-path="{$selected_file.dirname}" data-name="{ifempty($selected_file.basename,'')}"{/if}>{ifempty($selected_file.basename,'')}</span>
+    </div>
+
+    {if !empty($items)}
+        {if !empty($items.dir)}
+            {foreach $items.dir as $dir}
+                <div class="file dir" data-path="{$dir.path}" title="{$dir.name}">
+                    <a href="#"><i class="icon16 folder"></i> {$dir.name}</a>
+                </div>
+            {/foreach}
+        {/if}
+
+    {if !empty($items.file)}
+        {foreach $items.file as $dir}
+            <div class="file" data-path="{$dir.path}" data-file="{$dir.name}" title="{$dir.name}">
+                <i class="icon16 box"></i> {$dir.name|truncate:18:'..'}
+            </div>
+        {/foreach}
+    {/if}
+    {/if}
+</div>

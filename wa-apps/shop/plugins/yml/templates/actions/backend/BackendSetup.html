@@ -1,0 +1,805 @@
+<link rel="stylesheet" type="text/css" href="{$wa_url}wa-apps/shop/plugins/yml/css/tooltipster.bundle.min.css?v={$version}">
+<link rel="stylesheet" type="text/css" href="{$wa_url}wa-apps/shop/plugins/yml/css/import.css?v={$version}"/>
+<link rel="stylesheet" type="text/css" href="{$wa_url}wa-content/css/jquery-ui/ui-lightness/jquery.ui.slider.css?v={$version}">
+<link rel="stylesheet" type="text/css" href="{$wa_url}wa-apps/shop/plugins/yml/css/jquery.formstyler.css?v={$version}"/>
+<link rel="stylesheet" type="text/css" href="{$wa_url}wa-apps/shop/plugins/yml/css/jquery.formstyler.theme.css?v={$version}"/>
+
+<script type="text/javascript" src="{$wa_url}wa-apps/shop/plugins/yml/js/tooltipster.bundle.min.js?v={$version}"></script>
+<script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v={$version}"></script>
+<script type="text/javascript" src="{$wa_url}wa-content/js/jquery-plugins/fileupload/jquery.iframe-transport.js?v={$version}"></script>
+
+<script type="text/javascript" src="{$wa_url}wa-content/js/jquery-plugins/fileupload/jquery.fileupload.js?v={$version}"></script>
+<script type="text/javascript" src="{$wa_url}wa-apps/shop/plugins/yml/js/jquery.formstyler.min.js?v={$version}"></script>
+<script type="text/javascript" src="{$wa_url}wa-apps/shop/plugins/yml/js/import.js?v={$version}"></script>
+
+<div id="yml">
+
+    <div class="profiles">
+
+        <div class="profile-nav">
+            <span class="profile-nav-button prev" data-direction="left">&larr;</span>
+            <span class="profile-nav-button next" data-direction="right">&rarr;</span>
+        </div>
+
+        <ul class="tabs">
+            <li {if !$profile_id}class="selected"{/if} id="default-profile">
+                <a href="#/yml/">
+                    {ifempty($default_title,'Профиль 1')}
+                </a>
+            </li>
+
+            {foreach $profiles as $p_id => $p}
+                <li data-id="{$p_id}" id="profile{$p_id}"{if $profile_id == $p_id} class="selected"{/if}>
+                    <a href="#/yml:{$p_id}/">
+                        {$p.name}
+                    </a>
+                </li>
+            {/foreach}
+
+            <li class="no-tab add-profile">
+                <a href="#">
+                    <i class="icon16 add"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="fields form tab-content" id="profile-content">
+        
+        {if !empty($profile_id)}
+            <span class="delete-profile" data-id="{$profile_id}">
+                <i class="icon16 no"></i> Удалить профиль
+            </span>
+        {/if}
+        
+        <form action="?plugin=yml&module=backend&action=save" id="importform" method="POST">
+            
+            <div class="field" id="profile-name">
+                <div class="name special-padd">Название профиля</div>
+                <div class="value">
+                    <input type="text" class="std" name="settings[name]" value="{ifempty($settings.name, 'Без названия')}">
+                </div>
+            </div>
+
+            <div class="field no-border">
+                <div class="name special-padd">Файл</div>
+                <div class="value">
+
+                    <div class="sources">
+                        <div class="sources-head">
+                            <span class="sh-col{if empty($settings.source_type) || ($settings.source_type == 'remote')} active{/if}" data-type="remote">Ссылка</span>
+                            <span class="sh-col{if ifempty($settings.source_type) == 'local'} active{/if}" data-type="local">С компьютера</span>
+                            <span class="sh-col{if ifempty($settings.source_type) == 'server'} active{/if}" data-type="server">С сервера</span>
+
+                            <input type="hidden" name="settings[source_type]" value="{ifempty($settings.source_type)}">
+                        </div>
+                        <div class="source-tabs">
+                            <div class="source-tab remote{if empty($settings.source_type) || ($settings.source_type == 'remote')} active{/if}">
+                                <input type="text" class="std" name="settings[url]" {if !empty($settings.url)} value="{$settings.url}"{/if}/>
+
+                                <div class="yml-auth" id="yml-auth">
+                                        <input type="checkbox" class="iButton no_highlight" name="settings[http_auth]" value="1"{if !empty($settings.http_auth)} checked{/if}>
+                                        HTTP авторизация
+
+                                    <div class="yml-auth-data"{if empty($settings.http_auth)} style="display: none"{/if}>
+                                        <span class="hint">Логин:</span>
+                                        <input type="text" class="short" name="settings[http_login]" value="{ifempty($settings.http_login,'')}" style="margin-right: 15px">
+
+                                        <span class="hint">Пароль:</span>
+                                        <input type="password" class="short" name="settings[http_pass]" value="{ifempty($settings.http_pass,'')}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="source-tab local{if ifempty($settings.source_type) == 'local'} active{/if}">
+                                <div class="server-col left" style="width: 210px">
+                                    <input type="file" name="yml_file" id="local-source-file">
+
+                                    <div class="progress" style="display: none;">
+                                        <div class="progress-bar" style="width: 0"></div>
+                                    </div>
+                                </div>
+
+                                {$finfo = shopYmlPlugin::pathInfo(ifempty($settings['local.file']))}
+                                <div class="server-col right"{if empty($settings['local.file'])} style="display:none"{/if}>
+                                    <span class="server-file file" style="margin-top: 4px">
+                                        <span class="server-file-name" title="{ifempty($finfo.basename,'')}">{ifempty($finfo.basename,'')|truncate:35:'..'}</span>
+                                        <span class="server-file-size">{ifempty($settings['local.file.size'])}</span>
+
+                                        <span class="yml-delete-file" title="Удaлить"><i class="icon16 delete"></i></span>
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="source-tab server{if ifempty($settings.source_type) == 'server'} active{/if}">
+                                <div class="server-col left" style="width: 120px">
+                                    <button type="button" class="button mini yellow">{if empty($settings['server.file'])}Выбрать{else}Сменить{/if}</button>
+                                </div>
+
+                                <div class="server-col right"{if empty($settings['server.file'])} style="display:none"{/if}>
+                                    {$finfo = shopYmlPlugin::pathInfo(ifempty($settings['server.file']))}
+                                    <span class="server-file path">
+                                                {ifempty($finfo.dirname,'')}
+                                            </span>
+
+                                    <span class="server-file file">
+                                        <span class="server-file-name">{ifempty($finfo.basename,'')}</span>
+                                        <span class="server-file-size">{if !empty($settings['server.file'])}{shopYmlPlugin::formatSize($settings['server.file'])}{/if}</span>
+
+                                        <span class="yml-delete-file" title="Удалить"><i class="icon16 delete"></i></span>
+                                        <input type="hidden" name="settings[server.file]" value="{ifempty($settings['server.file'], '')}">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field" style="padding-top: 0">
+                <div class="name special-padd">Соответствия</div>
+                <div class="value">
+                    <button class="yml-matches make-snapshot button yellow" type="button">
+                        <i class="icon16 merge"></i>
+                        {if empty($settings.matched)}
+                            Указать
+                        {else}
+                            Изменить
+                        {/if}
+                    </button>
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name">Тип товаров</div>
+                <div class="value">
+                    {if !empty($types)}
+                        <select name="settings[product_type]">
+                            {foreach $types as $t}
+                                <option{if ifempty($settings.product_type) == $t.id} selected{/if} value="{$t.id}">
+                                    {$t.name}
+                                </option>
+                            {/foreach}
+                        </select>
+                    {/if}
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name special-padd">
+                    Принадлежность к профилю
+                </div>
+                
+                <div class="value">
+                    <ul class="menu-h" style="display:inline-block">
+                        <li>Нет</li>
+                        
+                        <li>
+                            <input type="checkbox" class="iButton" value="1" name="settings[bind_to_profile]"{if !empty($settings.bind_to_profile)} checked{/if}>
+                        </li>
+                        
+                        <li>Да</li>
+                    </ul>
+                    
+                    <div>
+                        <span class="hint">
+                           <i class="icon16 info"></i>
+                           Включите если у вас будут синхронизироватся несколько файлов в которых могут быть товары с одинаковым внешним идентификатором.
+                        </span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name special-padd">
+                    Импортировать категории
+                </div>
+                
+                <div class="value">
+                    <ul class="menu-h" style="display:inline-block">
+                        <li>Нет</li>
+                        
+                        <li>
+                            <input type="checkbox" class="iButton categs" value="1" id="importCategs" name="settings[import_categories]"{if !empty($settings.import_categories)} checked{/if}>
+                        </li>
+                        
+                        <li>Да</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="field fix-jq-margin" id="category-settings"{if empty($settings.import_categories)} style="display: none"{/if}>
+                <div class="name">Принадлежность товаров к категориям:</div>
+                <div class="value">
+                    <label {if !empty($settings.category) && $settings.category == 1 } class="checkedinput"{/if}>
+                        <input type="radio" name="settings[category]" {if !empty($settings.category) && $settings.category == 1 } checked="checked"{/if} value="1"/>
+                        Удалять из старых и добавлять в новые
+                    </label>
+                        <br /> 
+                    <label {if !empty($settings.category) && $settings.category == 2 } class="checkedinput"{/if}>
+                        <input type="radio" name="settings[category]" {if !empty($settings.category) && $settings.category == 2 } checked="checked"{/if} value="2"/>
+                        Оставлять старые и добавлять в новые
+                    </label> 
+                        <br />
+                    <label {if !empty($settings.category) && $settings.category == 3 } class="checkedinput"{/if}>
+                        <input type="radio" name="settings[category]" {if !empty($settings.category) && $settings.category == 3 } checked="checked"{/if} value="3"/>
+                        Устанавливать только для новых товаров
+                    </label>
+                        <br />
+                    <label {if !empty($settings.category) && $settings.category == 4 } class="checkedinput"{/if}>
+                        <input type="radio" name="settings[category]" {if !empty($settings.category) && $settings.category == 4 } checked="checked"{/if} value="4"/>
+                        Не устанавливать
+                    </label>
+                    <br /> <br />
+                    <label id="duplicate_as_child">
+                        <input class="no_highlight" type="checkbox" name="settings[duplicate_as_child]" {if !empty($settings.duplicate_as_child)} checked{/if} value="1"/>
+                        Загрузить структуру категорий в отдельную категорию на сайте
+                    </label>
+                    
+                    <div style="margin-top:14px;{if empty($settings.duplicate_as_child)} display:none{/if}" id="parent-category">
+                        <label style="display:block;margin-bottom:4px;font-size: 13px">Выберите родительскую категорию:</label>
+                        
+                        <select name="settings[parent_id]">
+                            {foreach $categories as $category}
+                                <option value="{$category.id}"{if ifempty($settings.parent_id) == $category.id} selected{/if}>
+                                    {"-"|str_repeat:$category.depth}{$category.name|escape}
+                                </option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="name special-padd">Ручное сопоставление категорий <span class="beta">(beta)</span></div>
+                <div class="value">
+
+                    <ul class="menu-h" style="display:inline-block">
+                        <li>Нет</li>
+
+                        <li>
+                            <input type="checkbox" class="iButton" value="1" id="allowCategMap" name="settings[allow_categ_map]"{if !empty($settings.allow_categ_map)} checked{/if}>
+                        </li>
+
+                        <li>Да</li>
+                    </ul>
+
+                    <div id="match-categories" {if empty($settings.allow_categ_map)}style="display: none"{/if}>
+                        <input type="button" class="button yellow" value="Сопоставить категории">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name">Добавлять новые товары в категорию</div>
+                <div class="value">
+                    <select name="settings[new_parent_id]">
+                        <option value="0">Не добавлять</option>
+                        {foreach $categories as $category}
+                            <option value="{$category.id}"{if ifempty($settings.new_parent_id) == $category.id} selected{/if}>
+                                {"-"|str_repeat:$category.depth}{$category.name|escape}
+                            </option>
+                        {/foreach}
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="name">Обнулять склады не обновлённые плагином</div>
+                <div class="value">
+                    <ul class="menu-h" style="display:inline-block">
+                        <li>Нет</li>
+
+                        <li>
+                            <input type="checkbox" class="iButton" value="1" id="reset_stocks" name="settings[reset_stocks]"{if !empty($settings.reset_stocks)} checked{/if}>
+                        </li>
+
+                        <li>Да</li>
+                    </ul>
+
+                    <span class="hint">
+                        <i class="icon16 info"></i> Если вы загружаете остатки в определённый склад, то друие склады будут обнулены. Чтобы другие склады не менялизначение отключите эту опцию.
+                    </span>
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name">Изображения товаров</div>
+                <div class="value fix-jq-margin">
+                    <label {if ifempty($settings.images) == 1 } class="checkedinput"{/if}>
+                        <input type="radio" name="settings[images]" {if !empty($settings.images) && $settings.images == 1 } checked="checked"{/if} value="1"/>
+                        Удалять старые и добавлять новые
+                    </label>
+                        <br />
+                    <label {if ifempty($settings.images) == 2 } class="checkedinput"{/if}>
+                        <input type="radio" name="settings[images]" {if !empty($settings.images) && $settings.images == 2 } checked="checked"{/if} value="2"/>
+                        Добавлять только новые
+                    </label> 
+                        <br />
+                    <label {if ifempty($settings.images) == 3 } class="checkedinput"{/if}>
+                        <input type="radio" name="settings[images]" {if !empty($settings.images) && $settings.images == 3 } checked="checked"{/if} value="3"/>
+                        Скачивать только для новых товаров
+                    </label>
+                        <br />
+                    <label {if ifempty($settings.images) == 4 } class="checkedinput"{/if}>
+                        <input type="radio" name="settings[images]" {if !empty($settings.images) && $settings.images == 4 } checked="checked"{/if} value="4"/>
+                        Не скачивать изображения
+                    </label>
+
+                    <div class="img_separator">
+                        {$separator = ifempty($settings.link_separator)}
+                        Разделитель ссылок на изображения: <select name="settings[link_separator]">
+                            <option value="0">Нет</option>
+                            <option value="1"{if $separator === '1'} selected{/if}>Запятая (,)</option>
+                            <option value="2"{if $separator === '2'} selected{/if}>Точка с зап. (;)</option>
+                            <option value="3"{if $separator === '3'} selected{/if}>Пробел</option>
+                        </select>
+
+                        <br>
+                        <span class="hint">
+                            <i class="icon16 info"></i>
+                             По умолчанию, плагин воспринимает каждое значение тега/артибута как отдельную прямую ссылку на изображение. Но иногда ссылки указаны в одном теге разделённые к примеру запятой.
+                        </span>
+                    </div>
+
+                    <div class="images_nr" style="margin-top:17px">
+                        Макс. количество изображений: <input type="text" class="short" name="settings[max_img]" value="{ifempty($settings.max_img,'')}">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name">Наценка</div>
+                <div class="value">
+                    
+                    <div class="yml-markup">
+                        <div class="yml-markup-types">
+                            <label data-id="">
+                                <input type="radio" name="settings[markup_type]" value="0"{if empty($settings.markup_type)} checked{/if}> Нет
+                            </label>                            
+                            
+                            <label data-id="fixed">
+                                <input type="radio" name="settings[markup_type]" value="1"{if ifempty($settings.markup_type) == '1'} checked{/if}> Фиксированная
+                            </label>
+                            
+                            <label data-id="stepped">
+                                <input type="radio" name="settings[markup_type]" value="2"{if ifempty($settings.markup_type) == '2'} checked{/if}> Ступенчатая
+                            </label>
+                        </div>
+    
+                        <div class="yml-markup-content">
+                            {$markup_type = ifempty($settings.markup_type,'0')}
+                            <div id="yml-markup-fixed" class="yml-markup-tab yml-fixed"{if $markup_type !== '1'} style="display:none"{/if}>
+                                <input type="text" name="settings[price_up]" class="short" value="{ifempty($settings.price_up,0)}">
+                                <select name="settings[type_of_markup]">
+                                        <option value="0"{if empty($settings.type_of_markup)} selected{/if}>Сумма</option>
+                                        <option value="1"{if !empty($settings.type_of_markup)} selected{/if}>Процент</option>
+                                 </select>
+                            </div>
+                            
+                            <div id="yml-markup-stepped" class="yml-markup-tab yml-stepped"{if $markup_type !== '2'} style="display:none"{/if}>
+                                
+                                <div class="yml-stepped-header">
+                                    <span class="step-header-col">
+                                        Цена
+                                    </span>
+                                    
+                                    <span class="step-header-col">
+                                        Наценка
+                                    </span>
+                                    
+                                    <span class="step-header-col">
+                                        Тип
+                                    </span>
+                                    
+                                    <span class="stepped-markup-add"><i class="icon16 add"></i></span>
+                                </div>
+                                
+                                <div class="yml-stepped-body">
+                                    {if !empty($markup)}
+                                        {foreach $markup.steps as $m_id => $m}
+                                            <div class="yml-stepped-row" data-id="{$m_id}">
+                                                <span class="step-body-col">
+                                                    <i>до</i> &nbsp;<input type="text" name="stepped_markup[{$m_id}][limit]" value="{$m.limit}">
+                                                </span>
+                                                
+                                                <span class="step-body-col">
+                                                    <input type="text" name="stepped_markup[{$m_id}][rate]" value="{$m.rate}">
+                                                </span>
+                                                
+                                                <span class="step-body-col">
+                                                    <select name="stepped_markup[{$m_id}][type]">
+                                                        <option value="0"{if $m.type == '0'} selected{/if}>Сумма</option>
+                                                        <option value="1"{if $m.type == '1'} selected{/if}>Процент</option>
+                                                    </select>
+                                                </span>
+                                                
+                                                <span class="markup-delete">
+                                                    <i class="icon16 delete"></i>
+                                                </span>
+                                            </div>
+                                        {/foreach}
+                                    {/if}
+
+                                    <div class="yml-stepped-row empty"{if !empty($markup.steps)} style="display: none"{/if}>
+                                            <span class="yml-markup-message">
+                                                <i class="icon16 exclamation"></i> Правила не установлены
+                                            </span>
+                                    </div>
+
+                                    <div class="yml-stepped-row step-default"{if empty($markup)} style="display: none"{/if}>
+                                        <div class="step-default-label">В иных случаях:</div>
+
+                                        <span class="step-body-col">
+                                            <input type="text" name="stepped_default[rate]" value="{ifempty($markup.default.rate,'')}">
+                                        </span>
+
+                                        <span class="step-body-col">
+                                            <select name="stepped_default[type]">
+                                                <option value="0"{if ifempty($markup.default.type,'') == 0} selected{/if}>Сумма</option>
+                                                <option value="1"{if ifempty($markup.default.type,'') == 1} selected{/if}>Процент</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="yml-stepped-row" id="stepped-template" style="display: none">
+                                    <span class="step-body-col till">
+                                        <i>до</i> &nbsp;<input type="text" data-key="limit">
+                                    </span>
+                                    
+                                    <span class="step-body-col rate">
+                                        <input type="text" data-key="rate">
+                                    </span>
+                                    
+                                    <span class="step-body-col">
+                                        <select data-key="type">
+                                                <option value="1">Процент.</option>
+                                                <option value="0">Фикс.</option>
+                                        </select>
+                                    </span>
+                                    
+                                    <span class="markup-delete">
+                                        <i class="icon16 delete"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="floated-ibutton" style="margin-top: 15px">
+                        <input type="checkbox" class="iButton" name="settings[convert_prices]" {if !empty($settings.convert_prices) } checked="checked"{/if} value="1">
+                        Конвертировать цены в основную валюту
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name">
+                    Название товара
+                </div>
+                
+                <div class="value">
+                   <label>
+                      <input type="radio" name="settings[product_names]" value="1"{if empty($settings.product_names) || $settings.product_names == 1} checked{/if}>
+                      Из одного тега
+                   </label>
+                   
+                   <label style="margin-left: 20px">
+                      <input type="radio" name="settings[product_names]" value="2"{if ifempty($settings.product_names) == 2} checked{/if}>
+                      Из нескольких тегов <span class="hint">(typePrefix + vendor + model)</span>
+                   </label>                   
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="name">
+                    Округлять цены до
+                </div>
+
+                <div class="value">
+                    <select name="settings[round]">
+                        <option value="0"{if empty($settings.round)} selected{/if}>Не округлять</option>
+                        <option value="1"{if ifempty($settings.round) == '1'} selected{/if}>1</option>
+                        <option value="5"{if ifempty($settings.round) == '5'} selected{/if}>5</option>
+                        <option value="10"{if ifempty($settings.round) == '10'} selected{/if}>10</option>
+                        <option value="100"{if ifempty($settings.round) == '100'} selected{/if}>100</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="name">
+                    Ед. измерения веса
+                </div>
+
+                <div class="value">
+                    <select name="settings[weight_unit]">
+                        <option value="g"{if ifempty($settings.weight_unit) == 'g'} selected{/if}>г</option>
+                        <option value="kg"{if ifempty($settings.weight_unit) == 'kg'} selected{/if}>кг</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name">
+                    Отмечать товары характеристикой
+                </div>
+                <div class="value" id="mark-with-feature">
+                    <select name="settings[mark_feature]">
+                        <option value="0">Не отмечать</option>
+                        {if !empty($features)}
+                            {foreach $features as $f}
+                                <option value="{$f.code}"{if ifempty($settings.mark_feature) == $f.code} selected{/if}>{$f.name}</option>
+                            {/foreach}
+                        {/if}
+                    </select>
+                    <br><br>
+                    
+                    <input style="padding: 4px 6px; min-width: 120px;width: 120px;{if empty($settings.mark_feature)}display:none{/if}" type="text" name="settings[mark_value]" value="{ifempty($settings.mark_value)}">
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name">Правила поиска</div>
+                <div class="value">
+                    <div class="value-w">
+                        <div style="padding: 5px 0;font-size: 12px" {if !empty($settings.searchbyname) && $settings.searchbyname == 1 } class="checkedinput"{/if}>Искать товары по наименованию:</div>
+                        <ul class="menu-h" style="display:inline-block">
+                            <li style="padding: 0;vertical-align: top;">Нет</li>
+                            <li style="padding: 0;"><input type="checkbox" class="iButton x" name="settings[searchbyname]" {if ifempty($settings.searchbyname) == 1 } checked="checked"{/if} value="1"/></li>
+                            <li class="istrue {if !empty($settings.searchbyname) && $settings.searchbyname == 1 }checkedinput{/if}" style="padding: 0;vertical-align: top;">Да</li>
+                        </ul>
+                    </div>
+
+                    <div class="value-w float-right">
+                        <div style="padding: 5px 0;font-size: 12px" {if !empty($settings.searchbysku) && $settings.searchbysku == 1 } class="checkedinput"{/if}>Искать товары по артикулу:</div>
+                        <ul class="menu-h" style="display:inline-block">
+                            <li style="padding: 0;vertical-align: top;">Нет</li>
+                            <li style="padding: 0;"><input type="checkbox" class="iButton x" name="settings[searchbysku]" {if ifempty($settings.searchbysku) == 1 } checked="checked"{/if} value="1"/></li>
+                            <li class="istrue {if ifempty($settings.searchbysku) == 1 }checkedinput{/if}" style="padding: 0;vertical-align: top;">Да</li>
+                        </ul>
+                    </div>
+
+                    <div style="clear: both; width: 100%; height: 20px"></div>
+
+                    <div class="floated-ibutton">
+                        <input type="checkbox" class="iButton no_highlight" name="settings[skip_another_profiles]" value="1"{if !empty($settings.skip_another_profiles)} checked{/if}>
+                        <span class="yml-label">
+                            Не сопоставлять с товарами других профилей
+                            <span class="hint"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name">Другие настройки</div>
+                <div class="value floated-ibutton">
+                    <div>
+                        <input type="checkbox" class="iButton no_highlight" name="settings[no_new_products]" value="1"{if !empty($settings.no_new_products)} checked{/if}>
+                        <span class="yml-label">
+                            Не добавлять новые товары
+                            <span class="hint">Пропускать новые товары обновляя только те которые были созданы ранее</span>
+                        </span>
+                    </div>
+                    
+                    <div>
+                        <input type="checkbox" class="iButton no_highlight" name="settings[no_update_products]" value="1"{if !empty($settings.no_update_products)} checked{/if}>
+                        <span class="yml-label">
+                            Не обновлять товары
+                            <span class="hint">Пропускать товары которые были созданы ранее добавляя только новинки</span>
+                        </span>
+                    </div>
+                    
+                    <div>
+                        <input type="checkbox" class="iButton no_highlight" name="settings[no_new_categs]" value="1"{if !empty($settings.no_new_categs)} checked{/if}>
+                        <span class="yml-label">Не добавлять новые категории
+                            <span class="hint">Пропускать новые категории обновляя только те которые были созданы ранее</span>
+                        </span>
+                    </div>
+                    
+                    <div>
+                        <input type="checkbox" class="iButton no_highlight" name="settings[no_update_categs]" value="1"{if !empty($settings.no_update_categs)} checked{/if}>
+                        <span class="yml-label">Не обновлять категории
+                            <span class="hint">Пропускать категории которые были созданы ранее, добавляя новые</span>
+                        </span>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" class="iButton no_highlight" name="settings[hide_excluded]" value="1"{if !empty($settings.hide_excluded)} checked{/if}>
+                        <span class="yml-label">Обнулять исчезнувшие товары
+                            <span class="hint">Товары которые исчезнут из файла будут сняты с продажи
+                        </span>
+                    </div>
+                    
+                    <div id="enforce-protocol">
+                        <input type="checkbox" class="iButton no_highlight" name="settings[enforce_protocol]" value="1"{if !empty($settings.enforce_protocol)} checked{/if}>
+                        <span class="yml-label">Протокол в ссылках на изображения
+                            <span class="hint">Данная опция позволяет заменять протокол доступа к изображениям (например с http на https)</span>
+                        </span>
+                        
+                        <div class="enforce-option" style="margin-top: 10px; font-size: 0.9em;{if empty($settings.enforce_protocol)}display:none{/if}">
+                            Выберите протокол:
+                            <select name="settings[enforce_protocol_option]">
+                                <option value="1"{if empty($settings.enforce_protocol_option) || ($settings.enforce_protocol_option == '1')} selected{/if}>https</option>
+                                <option value="2"{if ifempty($settings.enforce_protocol_option) == '2'} selected{/if}>http</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="yml-slider">
+                        <input type="checkbox" class="iButton" value="1" name="settings[limit_stream]"{if !empty($settings.limit_stream)} checked{/if}>
+
+                        <span class="yml-label">
+                            Ограничить поток
+
+                            <span class="hint">
+                                Ограничение рабочего процесса для устранения 500'ых ошибок.
+                            </span>
+                        </span>
+
+                        <div class="yml-slider-value"{if empty($settings.limit_stream)} style="display: none"{/if}>
+                            <span id="slider-value">
+                                {ifempty($settings.stream_value,40)}
+                            </span>
+
+                            <input type="hidden" name="settings[stream_value]" value="{ifempty($settings.stream_value,40)}">
+                        </div>
+
+                        <div class="yml-slider"{if empty($settings.limit_stream)} style="display: none"{/if}></div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name">
+                    Запоминать незавершённые сессии
+                </div>
+                
+                <div class="value">
+                    <ul class="menu-h" style="display:inline-block">
+                        <li>Нет</li>
+                        <li>
+                            <input type="checkbox" class="iButton" value="1" name="settings[restore]"{if !empty($settings.restore)} checked{/if}>
+                        </li>
+                        <li>Да</li>
+                    </ul>
+                    
+                    {if !empty($session)}
+                        <div style="margin-top: 10px;{if empty($settings.restore)}display:none;{/if}">
+                            <div class="session">
+                                <span class="session-label">
+                                    <i class="icon16 exclamation"></i>
+                                    Обнаружена неоконченная сессия импорта
+                                </span>
+                                
+                                <span class="session-remove" title="Удалить сессию">x</span>
+                                
+                                <div class="session-info">
+                                    <span class="sess-inf-time">
+                                        <strong>Время старта:</strong>
+                                        <i>{$session.time_start|wa_datetime:'humandatetime'}</i>
+                                    </span>
+
+                                    <span class="sess-inf-time">
+                                        <strong>Время прерывания:</strong>
+                                        <i>{$session.time_end|wa_datetime:'humandatetime'}</i>
+                                    </span>
+                                </div>
+
+                                <span class="hint">
+                                    <i class="icon16 info"></i>  Следующий импорт начнётся с того места на котором прервался предыдущий импорт.<br>
+                                    Чтобы импорт сработал по умолчанию - удалите эту сессию с помощью кнопки выше.
+                                </span>
+                            </div>
+                        </div>
+                    {/if}
+                </div>
+            </div>
+            
+            <div class="field">
+                <div class="name" >Отложенное выполнение:</div>
+                <div class="value">
+                    <ul class="menu-h" style="display:inline-block">
+                        <li style="padding: 0;vertical-align: top;">Нет</li>
+                        <li style="padding: 0;"><input type="checkbox" class="iButton" name="settings[automatization]" {if !empty($settings.automatization) && $settings.automatization == 1 } checked="checked"{/if} value="1"/></li>
+                        <li class="istrue {if !empty($settings.automatization) && $settings.automatization == 1 }checkedinput{/if}" style="padding: 0;vertical-align: top;">Да</li>
+                    </ul>
+                    <div class="yml-cli">php {$root_path}/cli.php shop ymlSyncFile{if !empty($profile_id)} -profile {$profile_id}{/if}</div>
+                    
+                    <div class="yml-cli-alert">
+                            {if empty($settings.last_cli_time)}
+                                <span class="yml-cli-alert-text no">
+                                <i class="icon16 status-red"></i> Задание CRON не настроено
+                                <span class="hint">
+                                    Отложенное обновление еще ни разу не выполнялось.
+                                </span>
+                            {else}
+                                <span class="yml-cli-alert-text">
+                                <i class="icon16 status-green"></i> Задание CRON настроено
+                                <span class="hint">
+                                    Последняя отложенная синхронизация выполнялась: <strong><i>{wa_date('humandatetime', $settings.last_cli_time)}</i></strong>
+                                </span>
+                            {/if}
+                                </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="field yml-buttons">
+                <div class="name"></div>
+                <div class="value" style="margin-left: 255px">
+                    <input type="submit" id="yml-pre-sync" class="button green" value="Сохранить" />
+                    <span id="save-status"></span>
+                    <input type="button" class="button green" id="yml-start-sync" value="Начать синхронизацию" />
+                    
+                    <input type="hidden" name="profile_id" value="{ifempty($profile_id,'')}">
+                </div>
+            </div>
+
+            <div class="field no-border" style="padding-left: 30px">
+                <div class="name"></div>
+                <div class="value" style="margin-left:150px; border: none;">
+                    <!-- Progress bar -->
+                    <div id="progressbar" style="display:none; margin-top: 20px;">
+                        <div class="stage_label"></div>
+
+                        <div class="progressbar blue float-left" style="display: none; width: 80%;">
+                            <div class="progressbar-outer" style="overflow: hidden;">
+                                <div class="progressbar-inner" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <img style="float:left; margin-top:8px;" src="{$wa_url}wa-content/img/loading32.gif" />
+                        <div class="clear"></div>
+                        <span class="progressbar-description">0%</span>
+                        <em class="hint">Пожалуйста не закрывайте браузер пока операция не закончится.</em>
+                        <br clear="left" />
+                        <em class="errormsg"></em>
+                    </div>
+
+                    <div id="report"></div>
+                    <!-- ./Progress Bar -->
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+    
+<div id="yml-dialog">
+    <div class="yml-dialog-inner">
+        <form name="yml-dialog-form">
+            <div class="yml-dialog-header bg-gd-orange no-hover">
+                <span class="yml-dialog-title"></span>
+                
+                <div class="yml-dialog-buttons">
+                    {*}<button type="button" title="Обновить схему" class="yml-dialog-reset"><i class="icon16 update"></i></button>
+                    <button type="submit" title="Сохранить"><i class="icon16 yes"></i></button>
+                    <button type="button" title="Отмена" class="yml-dialog-close">
+                        <i class="icon16 no"></i>
+                    </button>{*}
+                </div>
+
+            </div>
+            
+            <div class="yml-dialog-content">
+                <div class="yml-loader-wrap">
+                </div>
+            </div>
+            
+            {*}
+                <div class="yml-dialog-footer bg-gd-orange no-hover">
+                    <button type="submit"><i class="icon16 yes"></i> Сохранить</button>
+                    <a href="#" class="yml-dialog-cancel"><i class="icon16 no"></i> Отмена</a>
+                </div>
+            {*}
+        </form>
+    </div>
+</div>
