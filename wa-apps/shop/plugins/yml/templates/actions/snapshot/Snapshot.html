@@ -1,0 +1,173 @@
+<div id="yml-snapshot">
+    <div class="yml-s-body">
+
+        <div class="yml-tags-map">
+
+            <div class="tags-map-title bg-gd-orange">
+                Структура товара в файле
+            </div>
+
+            {strip}
+            <div class="yml-tags-list">
+
+                <div class="yml-tags-scroller">
+                    {if !empty($snapshot)}
+                        {$display = false}
+                        {$depth   = 0}
+                        {foreach $snapshot as $key => $v}
+                            {$tag_path = explode('\\', $key)}
+                            {$tag_data = explode(':', end($tag_path))}
+                            {$depth = intval($tag_data[0])}
+                            {$name = ifempty($tag_data[1])}
+
+                            {if $key == '0:yml_catalog\\1:shop\\2:offers\\3:offer'}
+                                {$display = true}
+                            {elseif $display && ($depth <= 3)}
+                                {$display = false}
+                            {/if}
+
+                            {if $display}
+                                {$tag_v = $v}
+                                {if is_array($v)}
+                                    {$tag_v = $v.value}
+                                {/if}
+
+                                {$have_attrs = is_array($v) && !empty($v['attrs'])}
+                                {$tag_v = strip_tags($tag_v)}
+                                {$is_feature_param = $is_default_map && (strpos($key, '0:yml_catalog\\1:shop\\2:offers\\3:offer\\4:param::') !== false)}
+                                {$ready = !empty($map[$key].type) || $is_feature_param}
+
+                                {if $depth === 1}{$plus = 27}{else}{$plus=37}{/if}
+                                {$is_main = ($name === 'offer') && ($depth === 3)}
+                                <div class="yml-s-row{if $ready} tag-ready{/if}{if $is_main} disabled{/if}"{if $depth && !($name === 'offer')} style="padding-left: {$depth*10 + 15}px"{/if} data-depth="{$depth}">
+
+                                    <span class="yml-item tag{if $ready} ready{/if}{if $is_main} disabled-tag{/if}" title="{$name} - {htmlspecialchars($tag_v)|escape}" data-value="{htmlspecialchars($tag_v)|escape}" data-key="{$key|escape}"
+                                      data-type="{if !$is_feature_param}{ifempty($map[$key].type,'')}{else if !empty($map['0:yml_catalog\\1:shop\\2:offers\\3:offer\\4:param'].type)}{$map['0:yml_catalog\\1:shop\\2:offers\\3:offer\\4:param'].type}{/if}{if !empty($map[$key].type) && empty($map[$key].up)}|1{/if}">
+                                                    &lt;{$name}{if !$have_attrs}&gt;{/if}
+                                    </span>
+
+                                    {if $have_attrs}
+                                        {foreach $v['attrs'] as $attr_id => $attr_value}
+                                            {$attr_key = "`$key`:a:`$attr_id`"}
+                                            <span class="yml-item attr{if !empty($map[$attr_key].type)} ready{/if}" title="{$name} - {$tag_v}" data-value="{$attr_value.value}" data-key="{$attr_key|escape}"
+                                                  data-type="{ifempty($map[$attr_key].type,'')}{if !empty($map[$attr_key].type) && empty($map[$attr_key].up)}|1{/if}">
+                                                                        {$attr_id}="{$attr_value.value}"
+                                            </span>
+                                        {/foreach}
+
+                                        <span class="yml-open-right-arrow">&gt;</span>
+                                    {/if}
+
+                                    {if !empty($v.end)}<span class="yml-value">{$tag_v|truncate:100}</span><span class="end-tag">&lt;/{$name}&gt;</span>{/if}
+                                </div>
+                            {/if}
+                        {/foreach}
+                    {/if}
+                </div>
+            </div>
+            {/strip}
+        </div>
+    </div>
+
+    {$fields_map = shopYmlHelper::getMapFields(false,true)}
+    <div class="yml-item-type">
+        <p>
+            Select element type:
+        </p>
+
+        <label>
+            <select name="item_type">
+                <option value="0">Do not import</option>
+                {foreach $fields_map as $key => $types}
+                <optgroup label="{shopYmlPlugin::translate($key)}">
+                    {foreach $types as $type_id => $type_name}
+                    <option value="{$key}:{$type_id}">{$type_name}</option>
+                    {/foreach}
+                </optgroup>
+                {/foreach}
+            </select>
+        </label>
+
+        <div class="yml-type-actions">
+            <a class="type-multi-add" href="#" title="Добавить"><i class="icon16 add"></i></a>
+            <a class="type-action type-save" title="Сохранить" href="#"><i class="icon16 yes"></i></a>
+            <a class="type-action type-cancel" title="Отмена" href="#"><i class="icon16 no"></i></a>
+        </div>
+
+        <div class="feature-settings" style="display: none">
+            <div class="feature-content">
+                <div id="f-existing" class="f-settings-item">
+                    <span class="f-settings-label">Выберите характеристику:</span>
+                    <select name="feature_id" class="select2">
+                        {if !empty($features)}
+                        {foreach $features as $f}
+                        <option value="{$f.id}" data-multiple="{$f.multiple}">{$f.name}</option>
+                        {/foreach}
+                        {/if}
+                    </select>
+                </div>
+
+                {*}
+                <div id="f-new" class="f-settings-item" style="display: none">
+                    <div class="settings-item-block">
+                        <span class="f-settings-label">[`Select product type`]:</span>
+                        <select name="feature_type">
+                            {if !empty($feature_types)}
+                            {foreach $feature_types as $t}
+                            <option value="{$t.type}">{$t.name}</option>
+                            {/foreach}
+                            {/if}
+                        </select>
+                    </div>
+
+                    {if false && !empty($product_types)}
+                    <div class="settings-item-block product-types">
+                        <div class="product-type-all">
+                            <label>
+                                <input type="checkbox" name="product_type" value="0" checked>
+                                [`All product types`]
+                            </label>
+                        </div>
+
+                        <div class="product-type-other" style="display: none">
+                            <ul class="menu-v">
+                                {foreach $product_types as $type}
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="product_type[]" value="{$type.id}">
+                                        {if !empty($type.icon)}<i class="icon16 {$type.icon}"></i>{/if}
+                                        {$type.name}
+                                    </label>
+                                </li>
+                                {/foreach}
+                            </ul>
+                        </div>
+                    </div>
+                    {/if}
+                </div>
+                {*}
+            </div>
+
+        </div>
+
+        <div class="multi-list">
+
+        </div>
+
+        <div class="yml-type-options">
+            <label id="create_sku" style="display:none">
+                <input type="checkbox" name="create_sku"> Создавать артикул
+            </label>
+
+            <label>
+                <input type="checkbox" name="up"> Обновлять повторно
+            </label>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        max_inputs      = {$max_inputs};
+        yml_fields      = {json_encode($fields_map)};
+        yml_type_titles = {json_encode(shopYmlPlugin::translate())};
+    </script>
+</div>

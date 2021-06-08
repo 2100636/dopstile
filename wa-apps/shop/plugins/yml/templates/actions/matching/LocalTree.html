@@ -1,0 +1,61 @@
+{if !empty($foreign_cat)}
+    <div class="foreign-category">
+        <a href="#" class="back">← Скрыть</a>
+        
+        <span class="foreign-name" data-id="{$foreign_cat.id}">
+            {$foreign_cat.name}
+        </span>
+    </div>
+{/if}
+
+<!-- categories begin -->
+{if !empty($categories)}
+    {$categories_rights = $wa->userRights('setscategories')}
+    {$depth = -1}
+    
+    <input type="hidden" id="yml-selected-local" value="{ifempty($selected_id,0)}">
+    {foreach $categories as $category}
+
+      {if $category.depth < $depth}
+        {section name="end-category" loop = $depth - $category.depth}
+                </li>
+            </ul>
+        {/section}
+        {$depth = $category.depth}
+      {/if}
+
+      {if $category.depth == $depth}
+          </li>
+          <li class="{if $category.id == $selected_id}matched{/if} dr{if $category.type == shopCategoryModel::TYPE_DYNAMIC} dynamic{/if}" id="yml-category-{$category.id}" data-id="{$category.id}" data-depth="{$category.depth}" data-type="category"{if $selected_id == $category.id} data-mode="{$foreign_cat.mode}"{/if}>
+      {/if}
+
+      {if $category.depth > $depth}
+          <ul class="menu-v with-icons">
+              <li class="{if $category.id == $selected_id}matched {/if}{if $categories_rights}dr{/if} {if $category.type == shopCategoryModel::TYPE_DYNAMIC}dynamic{/if}" id="yml-category-{$category.id}" data-id="{$category.id}" data-depth="{$category.depth}" data-type="category"{if $selected_id == $category.id} data-mode="{$foreign_cat.mode}"{/if}>
+              {$depth = $category.depth}
+      {/if}
+       
+        <a href="#/products/category_id={$category.id}" class="s-product-list{if !$category.status} gray{/if}">{strip}
+            <span class="name">
+                <i class="icon16 {if $category.type == shopCategoryModel::TYPE_DYNAMIC}funnel{else}folder{/if}"></i>
+                {$category.name|escape}
+            </span>
+            
+            {if $category.children_count > 0}
+                <i class="icon16 {if empty($category.expanded)}darr{else}uarr{/if} overhanging" id="yml-category-{$category.id}-handler"></i>
+            {/if}
+        {/strip}</a>
+
+              {if !empty($breadcrumbs) && !empty($breadcrumbs[$category.id])}
+                {shopYmlPlugin::getChilds($category, $breadcrumbs, $selected_id)}
+              {/if}
+
+    {/foreach}
+
+    {section name="end-category" loop = $depth + 1}
+          </li>
+        </ul>
+    {/section}
+{/if}
+
+<!-- categories end -->

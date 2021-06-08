@@ -1,0 +1,42 @@
+<div id="match-categs">
+    
+    <div class="match-sides">
+        <div class="match-side side-left file-tree">
+            <div style="padding: 7px 8px;font-size: 0.83em;/* color: white; *//* background: #bbbbbb; */">
+                <span class="file-structure">Категории из файла:</span>
+            </div>
+           {shopYmlPlugin::getHtmlTree($file_tree, 0, $profile_id)}
+        </div>
+    </div>
+    
+    <div class="match-options">
+        <div class="mo-head">
+            <span>Выберите режим сопоставления</span>
+        </div>
+        <div class="match-options-in">
+            
+            <label>
+                <input type="radio" name="match_option" value="1" checked> Подкатегории и товары
+                <span class="hint">
+                    Если у категории в файле есть подкатегории, то они также будут дублированы в магазине. При этом все товары будут отсортированы по своим категориям.
+                </span>
+            </label>
+            
+            <label>
+                <input type="radio" name="match_option" value="2"> Только товары
+                <span class="hint">
+                    Все товары из выбранной категории из файла, а также из её подкатегорий, будут загружены в эту категорию магазина
+                </span>
+            </label>
+            
+            <label>
+                <input type="radio" name="match_option" value="0"> Удалить связь
+            </label>           
+        </div>
+        
+        <div class="match-buttons">
+            <input type="button" value="Сохранить" class="button mini match-type yellow">
+            <a href="#" class="mo-close">Отмена</a>
+        </div>
+    </div>
+</div>

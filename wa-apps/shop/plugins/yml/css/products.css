@@ -1,0 +1,23 @@
+input#extern_optom,input#extcat_optom{
+    padding: 2px 1px;
+    border: 1px solid #ddd;
+    color: #4F4F4F;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    outline: none;
+    width: 130px;
+    font-size: 16px;
+    text-align: center;
+}
+#extern_optom_save_button{
+    width: 25px;
+    display: inline-block;
+    padding-left: 5px;
+    position: relative;
+}
+#extern_optom_save_button i{
+    vertical-align: text-top;
+    display: none;
+    cursor: pointer
+}
