@@ -1,7 +1,7 @@
 {strip}
 
 {if $wa->post("formname") }
-{shopCustom::sendEmail() } 
+  {shopCustom::sendEmail() } 
 {/if}
 
 {$wa->globals("hideSidebar", true)}
@@ -20,11 +20,11 @@
 
 {$user_id = $wa->user('id')}
 {if $user_id}
-{* <!-- Пользователь авторизован --> *}
-{$favorite = explode(",", $wa->user("favorite_products"))}
+  {* <!-- Пользователь авторизован --> *}
+  {$favorite = explode(",", $wa->user("favorite_products"))}
 {else}
-{* <!-- Пользователь НЕ авторизован --> *}
-{$favorite = explode(",", waRequest::cookie('favorite'))}
+  {* <!-- Пользователь НЕ авторизован --> *}
+  {$favorite = explode(",", waRequest::cookie('favorite'))}
 {/if}
 
 
@@ -148,21 +148,21 @@
       <div class="tab-pane active" id="home_new">
         <ul class="s-products-list thumbs-view">
           {foreach $home_new as $product name=foo}
-          {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
+            {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
           {/foreach}
         </ul>
       </div>
       <div class="tab-pane" id="home_skidka">
         <ul class="s-products-list thumbs-view">
           {foreach $home_skidka as $product name=foo}
-          {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
+            {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
           {/foreach}
         </ul>
       </div>
       <div class="tab-pane" id="home_hits">
         <ul class="s-products-list thumbs-view">
           {foreach $home_hits as $product name=foo}
-          {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
+            {include file="./products.items.html" index=$smarty.foreach.foo.index product=$product}
           {/foreach}
         </ul>
       </div>
